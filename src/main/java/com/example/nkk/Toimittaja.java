@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Osasto extends AbstractPersistable<Long> {
+public class Toimittaja extends AbstractPersistable<Long> {
 
     private String nimi;
-    private Long osastoIDP;
-
+    private String yhteyshenkilo;
+    private String yhteyshenkiloemail;
 }
