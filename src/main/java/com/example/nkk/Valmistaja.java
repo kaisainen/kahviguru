@@ -20,6 +20,7 @@ public class Valmistaja extends AbstractPersistable<Long> {
     private String nimi;
     private String url;
 
+    // valmistajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
     @OneToMany(mappedBy = "valmistaja")
     private List<Tuote> tuotteet;
 }

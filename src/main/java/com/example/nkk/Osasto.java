@@ -19,6 +19,7 @@ public class Osasto extends AbstractPersistable<Long> {
     private String nimi;
     private Long osastoIDP;
 
+    // osastossa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN, ei osasto
     @OneToMany(mappedBy = "osasto")
     private List<Tuote> tuotteet;
 }

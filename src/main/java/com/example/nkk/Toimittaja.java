@@ -23,6 +23,7 @@ public class Toimittaja extends AbstractPersistable<Long> {
     private String yhteyshenkilo;
     private String yhteyshenkiloemail;
 
+    // toimittajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
     @OneToMany(mappedBy = "toimittaja")
     private List<Tuote> tuotteet;
 }

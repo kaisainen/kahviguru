@@ -14,21 +14,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Tuote extends AbstractPersistable<Long> {
+@Entity // luo tietokantataulun
+@Data // luo getterit ja setterit
+@NoArgsConstructor // luo konstruktorit
+@AllArgsConstructor // luo konstruktorit
+public class Tuote extends AbstractPersistable<Long> { // luo long-pääavaimet automaattisesti luokkaan
 
     private String nimi;
     private String kuvaus;
     private BigDecimal hinta;
     private String kuva;
-
+    // tuote kuuluu yhteen osastoon
     @ManyToOne
     private Osasto osasto;
+    // tuote kuuluu yhteen valmistajaan
     @ManyToOne
     private Valmistaja valmistaja;
+    // tuote kuuluu yhteen toimittajaan
     @ManyToOne
     private Toimittaja toimittaja;
 
