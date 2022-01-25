@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nooran kahvikauppa - tuotteet</title>
+    <link rel="stylesheet" th:href="@{/css/layout.css}" />
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Tuotteen nimi</th>
+        <th>Kuvaus</th>
+        <th>Hinta</th>
+        <th>Tuotekuva</th>
+        <th>Osasto</th>
+        <th>Valmistaja</th>
+        <th>Toimittaja</th>
+      </tr>
+      <tr th:each="tuote : ${tuotteet}">
+        <td th:text="${tuote.id}"></td>
+        <td th:text="${tuote.nimi}"></td>
+        <td th:text="${tuote.kuvaus}"></td>
+        <td th:text="${tuote.hinta}"></td>
+        <td th:text="${tuote.kuva}"></td>
+        <!-- <a th:href="${link.link}">
+            <span th:text="${link.link}"></span>
+          </a> -->
+        <td th:text="${tuote.osasto}"></td>
+        <td th:text="${tuote.valmistaja}"></td>
+        <td th:text="${tuote.toimittaja}"></td>
+      </tr>
+    </table>
+    <hr />
+    <div class="container">
+      <form th:action="@{/tuotteet}" method="POST">
+        <div class="row">
+          <div class="col-25">
+            <label for="nimi">Tuotteen nimi:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="nimi" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="kuvaus">Kuvaus:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="kuvaus" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="hinta">Hinta:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="hinta" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="kuva">Kuva:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="kuva" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="valmistaja">Valmistaja:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="valmistaja" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="toimittaja">Toimittaja:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="toimittaja" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="osasto">Osasto IDP:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" name="osasto" />
+          </div>
+        </div>
+
+        <br />
+        <div class="row">
+          <input type="submit" value="Lisää tuote" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
