@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -25,5 +24,5 @@ public class Toimittaja extends AbstractPersistable<Long> {
 
     // toimittajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
     @OneToMany(mappedBy = "toimittaja")
-    private List<Tuote> tuotteet;
+    private List<Tuote> tuotteet = new ArrayList<>();
 }

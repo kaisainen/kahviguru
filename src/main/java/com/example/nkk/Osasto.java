@@ -21,5 +21,5 @@ public class Osasto extends AbstractPersistable<Long> {
 
     // osastossa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN, ei osasto
     @OneToMany(mappedBy = "osasto")
-    private List<Tuote> tuotteet;
+    private List<Tuote> tuotteet = new ArrayList<>();
 }

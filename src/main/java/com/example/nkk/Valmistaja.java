@@ -22,5 +22,5 @@ public class Valmistaja extends AbstractPersistable<Long> {
 
     // valmistajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
     @OneToMany(mappedBy = "valmistaja")
-    private List<Tuote> tuotteet;
+    private List<Tuote> tuotteet = new ArrayList<>();
 }
