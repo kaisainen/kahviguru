@@ -1,15 +1,9 @@
 package com.example.nkk;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,17 +67,20 @@ public class NkkController {
         return "redirect:/toimittajat";
     }
 
-    @RequestMapping(value = "/poista", method = RequestMethod.GET)
+    @RequestMapping(value = "valmistajat/poista", method = RequestMethod.GET)
     public String poistaValmistaja(@RequestParam(name = "valmistajaId") Long id) {
         valmistajaRepo.deleteById(id);
         return "redirect:/valmistajat";
     }
 
+    @RequestMapping(value = "toimittajat/poista", method = RequestMethod.GET)
+    public String poistaToimittaja(@RequestParam(name = "toimittajaId") Long id) {
+        toimittajaRepo.deleteById(id);
+        return "redirect:/toimittajat";
+    }
+
     // @PostMapping("/tuotteet")
     // public String lisaaTuote(@RequestParam String nimi, @RequestParam String
-    // kuvaus,
-    // @RequestParam String kuva,
-    // @RequestParam BigDecimal hinta, @RequestParam String valmistaja,
     // @RequestParam String toimittaja,
     // @RequestParam String osasto) {
 
