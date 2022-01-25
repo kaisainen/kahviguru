@@ -24,19 +24,12 @@
         <td th:text="${valmistaja.id}"></td>
         <td th:text="${valmistaja.nimi}"></td>
         <td th:text="${valmistaja.url}"></td>
-        <!-- <form
-          th:action="@{/poistaValmistaja}"
-          th:object="${valmistaja2}"
-          method="post"
-        >
-          <input type="hidden" name="id" th:value="${valmistaja.id}" />
-          <input type="hidden" name="nimi" th:value="${valmistaja.nimi}" />
-          <input type="hidden" name="url" th:value="${valmistaja.url}" />
-          <button type="submit">Poista</button>
-        </form> -->
         <td>
           <button class="btn btn-danger">
-            <a th:href="|@{/poista/(valmistajaId=${valmistaja.id})}|">Poista</a>
+            <a
+              th:href="|@{/valmistajat/poista/(valmistajaId=${valmistaja.id})}|"
+              >Poista</a
+            >
           </button>
         </td>
       </tr>
