@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +67,22 @@ public class NkkController {
         uusToimittaja.setYhteyshenkiloemail(yhteyshenkiloemail);
         toimittajaRepo.save(uusToimittaja);
         return "redirect:/toimittajat";
+    }
+
+    @GetMapping("/valmistajat/muokkaa/{id}")
+    public String naytaMuokkaaValmistaja(@PathVariable("id") long id, Model model) {
+        Valmistaja valmistaja = valmistajaRepo.getById(id);
+        model.addAttribute("valmistaja", valmistaja);
+        return "muokkaa";
+    }
+
+    @PostMapping("/valmistajat/muokkaa/{id}")
+    public String muokkaaValmistajaa(@PathVariable("id") Long id, @RequestParam String nimi, @RequestParam String url) {
+        Valmistaja valmistaja = valmistajaRepo.getById(id);
+        valmistaja.setNimi(nimi);
+        valmistaja.setUrl(url);
+        valmistajaRepo.save(valmistaja);
+        return "redirect:/valmistajat";
     }
 
     @RequestMapping(value = "valmistajat/poista", method = RequestMethod.GET)
