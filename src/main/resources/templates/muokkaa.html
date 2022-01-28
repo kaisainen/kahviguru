@@ -7,7 +7,9 @@
     <title>Nooran kahvikauppa - Muokkaa</title>
   </head>
   <body>
-    <h1 th:text="${valmistaja.id}">Valmistaja tunnus</h1>
+    <button class="btn btn-light">
+      <a href="./../../valmistajat">Takaisin</a>
+    </button>
 
     <p>Nimi: <span th:text="${valmistaja.nimi}">nimi</span>.</p>
     <p>Url: <span th:text="${valmistaja.url}">url</span>.</p>

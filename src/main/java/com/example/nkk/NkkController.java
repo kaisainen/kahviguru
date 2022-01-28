@@ -1,5 +1,7 @@
 package com.example.nkk;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,7 +84,25 @@ public class NkkController {
         valmistaja.setNimi(nimi);
         valmistaja.setUrl(url);
         valmistajaRepo.save(valmistaja);
-        return "redirect:/valmistajat";
+        return "redirect:/valmistajat/muokkaa/" + id;
+    }
+
+    @GetMapping("/toimittajat/edit/{id}")
+    public String naytaMuokkaaToimittaja(@PathVariable("id") long id, Model model) {
+        Toimittaja toimittaja = toimittajaRepo.getById(id);
+        model.addAttribute("toimittaja", toimittaja);
+        return "edit";
+    }
+
+    @PostMapping("/toimittajat/edit/{id}")
+    public String muokkaaToimittajaa(@PathVariable("id") Long id, @RequestParam String nimi,
+            @RequestParam String yhteyshenkilo, @RequestParam String yhteyshenkiloemail) {
+        Toimittaja toimittaja = toimittajaRepo.getById(id);
+        toimittaja.setNimi(nimi);
+        toimittaja.setYhteyshenkilo(yhteyshenkilo);
+        toimittaja.setYhteyshenkiloemail(yhteyshenkiloemail);
+        toimittajaRepo.save(toimittaja);
+        return "redirect:/toimittajat/edit/" + id;
     }
 
     @RequestMapping(value = "valmistajat/poista", method = RequestMethod.GET)
@@ -99,37 +119,17 @@ public class NkkController {
 
     // @PostMapping("/tuotteet")
     // public String lisaaTuote(@RequestParam String nimi, @RequestParam String
+    // kuva, @RequestParam BigDecimal hinta, @RequestParam String kuvaus,
     // @RequestParam String toimittaja,
-    // @RequestParam String osasto) {
+    // @RequestParam String osastonimi) {
 
-    // if (!nimi.isEmpty() && !kuvaus.isEmpty()) {
     // Tuote uusiTuote = new Tuote();
     // uusiTuote.setNimi(nimi);
     // uusiTuote.setHinta(hinta);
     // uusiTuote.setKuva(kuva);
     // uusiTuote.setKuvaus(kuvaus);
-    // Osasto uusiOsasto = new Osasto();
-    // uusiOsasto.setNimi("nimi1");
-    // uusiOsasto.setOsastoIDP(2L);
-    // uusiOsasto.setTuotteet(new ArrayList<>());
-    // osastoRepo.save(uusiOsasto);
-    // Valmistaja uusiValmistaja = new Valmistaja();
-    // uusiValmistaja.setNimi("nimiv");
-    // uusiValmistaja.setTuotteet(new ArrayList<>());
-    // uusiValmistaja.setUrl("www.hs.fi");
-    // valmistajaRepo.save(uusiValmistaja);
-    // Toimittaja uusiToimittaja = new Toimittaja();
-    // uusiToimittaja.setNimi("nimi3");
-    // uusiToimittaja.setYhteyshenkilo("kaarlo");
-    // uusiToimittaja.setTuotteet(new ArrayList<>());
-    // uusiToimittaja.setYhteyshenkiloemail("kaarlo@email.com");
-    // toimittajaRepo.save(uusiToimittaja);
-    // uusiTuote.setToimittaja(uusiToimittaja);
-    // uusiTuote.setValmistaja(uusiValmistaja);
-    // uusiTuote.setOsasto(uusiOsasto);
-    // tuoteRepo.save(uusiTuote);
-    // }
+
+    // Osasto osasto = osastoRepo.findByNimi(osastonimi);
     // return "redirect:/tuotteet";
     // }
-
 }
