@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nooran kahvikauppa - Muokkaa</title>
+  </head>
+  <body>
+    <button class="btn btn-light">
+      <a href="./../../valmistajat">Takaisin</a>
+    </button>
+
+    <p>Nimi: <span th:text="${valmistaja.nimi}">nimi</span>.</p>
+    <p>Url: <span th:text="${valmistaja.url}">url</span>.</p>
+
+    <form
+      action="#"
+      method="POST"
+      th:action="@{/valmistajat/muokkaa/{id}(id=${valmistaja.id})}"
+      th:object="${valmistaja}"
+    >
+      <label for="nimi">Nimi</label>
+      <input type="text" th:field="*{nimi}" id="nimi" placeholder="Nimi" />
+      <label for="url">Url</label>
+      <input type="text" th:field="*{url}" id="url" placeholder="url" />
+      <input type="submit" value="Päivitä valmistajan tiedot" />
+    </form>
+  </body>
+</html>

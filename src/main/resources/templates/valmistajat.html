@@ -14,6 +14,10 @@
     <link rel="stylesheet" th:href="@{/css/layout.css}" />
   </head>
   <body>
+    <header th:replace="fragments/header :: header">
+      <p>header with links etc</p>
+    </header>
+
     <table>
       <tr>
         <th>Id</th>
@@ -29,6 +33,13 @@
             <a
               th:href="|@{/valmistajat/poista/(valmistajaId=${valmistaja.id})}|"
               >Poista</a
+            >
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-info">
+            <a th:href="|@{/valmistajat/muokkaa/{id}(id=${valmistaja.id})}|"
+              >Muokkaa</a
             >
           </button>
         </td>
