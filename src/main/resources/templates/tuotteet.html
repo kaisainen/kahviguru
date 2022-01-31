@@ -25,9 +25,6 @@
         <td th:text="${tuote.kuvaus}"></td>
         <td th:text="${tuote.hinta}"></td>
         <td th:text="${tuote.kuva}"></td>
-        <!-- <a th:href="${link.link}">
-            <span th:text="${link.link}"></span>
-          </a> -->
         <td th:text="${tuote.osasto}"></td>
         <td th:text="${tuote.valmistaja}"></td>
         <td th:text="${tuote.toimittaja}"></td>
@@ -70,26 +67,57 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="valmistaja">Valmistaja:</label>
+            <label for="valmistajanimi">Valmistaja:</label>
           </div>
           <div class="col-75">
-            <input type="text" name="valmistaja" />
+            <!-- <input type="text" name="valmistajanimi" /> -->
+            <select th:name="valmistajaID">
+              <!-- <option selected>Valitse valmistaja</option> -->
+              <option
+                th:each="valmistaja : ${valmistajat}"
+                th:value="${valmistaja.id}"
+                th:text="${valmistaja.nimi}"
+              />
+            </select>
           </div>
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="toimittaja">Toimittaja:</label>
+            <label for="toimittajanimi">Toimittaja:</label>
           </div>
           <div class="col-75">
-            <input type="text" name="toimittaja" />
+            <!-- <input type="text" name="toimittajanimi" /> -->
+            <select th:name="toimittajaID">
+              <!-- <option selected>Valitse toimittaja</option> -->
+              <option
+                th:each="toimittaja : ${toimittajat}"
+                th:value="${toimittaja.id}"
+                th:text="${toimittaja.nimi}"
+              />
+            </select>
           </div>
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="osasto">Osasto IDP:</label>
+            <label for="osastonimi">Osaston nimi:</label>
           </div>
           <div class="col-75">
-            <input type="text" name="osasto" />
+            <!-- <input type="text" name="osastonimi" /> -->
+            <!-- <select th:field="*{osastot}">
+              <option
+                th:each="osasto : ${osastot}"
+                th:value="${osasto.id}"
+                th:text="${osasto.nimi}"
+              />
+            </select> -->
+            <select th:name="osastoID">
+              <!-- <option selected>Valitse osasto</option> -->
+              <option
+                th:each="osasto : ${osastot}"
+                th:value="${osasto.id}"
+                th:text="${osasto.nimi}"
+              />
+            </select>
           </div>
         </div>
 

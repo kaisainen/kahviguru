@@ -36,6 +36,9 @@ public class NkkController {
     @GetMapping("/tuotteet")
     public String naytaTuotteet(Model model) {
         model.addAttribute("tuotteet", tuoteRepo.findAll());
+        model.addAttribute("valmistajat", valmistajaRepo.findAll());
+        model.addAttribute("osastot", osastoRepo.findAll());
+        model.addAttribute("toimittajat", toimittajaRepo.findAll());
         return "tuotteet";
     }
 
@@ -117,19 +120,26 @@ public class NkkController {
         return "redirect:/toimittajat";
     }
 
-    // @PostMapping("/tuotteet")
-    // public String lisaaTuote(@RequestParam String nimi, @RequestParam String
-    // kuva, @RequestParam BigDecimal hinta, @RequestParam String kuvaus,
-    // @RequestParam String toimittaja,
-    // @RequestParam String osastonimi) {
+    @PostMapping("/tuotteet")
+    public String lisaaTuote(@RequestParam String nimi, @RequestParam String kuva, @RequestParam BigDecimal hinta,
+            @RequestParam String kuvaus, @RequestParam Long osastoID,
+            @RequestParam Long toimittajaID,
+            @RequestParam Long valmistajaID) {
 
-    // Tuote uusiTuote = new Tuote();
-    // uusiTuote.setNimi(nimi);
-    // uusiTuote.setHinta(hinta);
-    // uusiTuote.setKuva(kuva);
-    // uusiTuote.setKuvaus(kuvaus);
+        Tuote uusiTuote = new Tuote();
+        uusiTuote.setNimi(nimi);
+        uusiTuote.setHinta(hinta);
+        uusiTuote.setKuva(kuva);
+        uusiTuote.setKuvaus(kuvaus);
 
-    // Osasto osasto = osastoRepo.findByNimi(osastonimi);
-    // return "redirect:/tuotteet";
-    // }
+        Osasto osasto = osastoRepo.getById(osastoID);
+        uusiTuote.setOsasto(osasto);
+        Valmistaja valmistaja = valmistajaRepo.getById(valmistajaID);
+        uusiTuote.setValmistaja(valmistaja);
+        Toimittaja toimittaja = toimittajaRepo.getById(toimittajaID);
+        uusiTuote.setToimittaja(toimittaja);
+        tuoteRepo.save(uusiTuote);
+
+        return "redirect:/tuotteet";
+    }
 }
