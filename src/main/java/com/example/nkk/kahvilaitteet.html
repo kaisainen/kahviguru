@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nooran kahvikauppa</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Tuotteen nimi</th>
+        <th>Kuvaus</th>
+        <th>Hinta</th>
+        <th>Tuotekuva</th>
+      </tr>
+      <tr th:each="tuote : ${tuotteet}">
+        <td th:text="${tuote.id}"></td>
+        <td th:text="${tuote.nimi}"></td>
+        <td th:text="${tuote.kuvaus}"></td>
+        <td th:text="${tuote.hinta}"></td>
+        <td th:text="${tuote.kuva}"></td>
+      </tr>
+    </table>
+  </body>
+</html>
