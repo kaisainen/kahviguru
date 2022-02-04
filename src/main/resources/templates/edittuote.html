@@ -32,7 +32,9 @@
       toimittaja: <span th:text="${tuote.toimittaja.nimi}">toimittaja</span>
     </p>
     <figure>
-      <img th:src="${tuote.kuva}" alt="" />
+      <img th:src="@{/tuotteet/edittuote/{id}/content(id=${tuote.id})}" />
+
+      <!-- <img src="/images/sieppaa.png" alt="" /> -->
     </figure>
     <!-- <p>Osasto: <span th:text="${tuote.osasto}">osasto</span></p> -->
 
@@ -53,8 +55,12 @@
         placeholder="kuvaus"
       />
 
-      <label for="kuva">Kuva</label>
-      <input type="text" th:field="*{kuva}" id="kuva" placeholder="kuva" />
+      <!-- <label for="kuva">Kuva:</label>
+    </div>
+    <div class="col-75">
+      <input type="file" name="kuva" id="kuva" th:field="*{kuva}" />
+    </div>
+  </div> -->
 
       <label for="hinta">hinta</label>
       <input type="text" th:field="*{hinta}" id="hinta" placeholder="hinta" />

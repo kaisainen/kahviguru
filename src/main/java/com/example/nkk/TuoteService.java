@@ -31,4 +31,9 @@ public class TuoteService {
         tuoteRepo.deleteById(id);
     }
 
+    public List<Tuote> listaaHalututTuotteet(List<Long> halututTuotteet) {
+        List<Tuote> tuotteet = tuoteRepo.findByOsasto_idIn(halututTuotteet);
+        return tuotteet;
+    }
+
 }

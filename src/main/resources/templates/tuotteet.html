@@ -32,7 +32,8 @@
         <td th:text="${tuote.nimi}"></td>
         <td th:text="${tuote.kuvaus}"></td>
         <td th:text="${tuote.hinta}"></td>
-        <td th:text="${tuote.kuva}"></td>
+        <!-- <td th:text="${tuote.kuva}"></td> -->
+        <td></td>
         <td th:text="${tuote.osasto.nimi}"></td>
         <td th:text="${tuote.valmistaja.nimi}"></td>
         <td th:text="${tuote.toimittaja.nimi}"></td>
@@ -52,7 +53,11 @@
     </table>
 
     <div class="container">
-      <form th:action="@{/tuotteet}" method="POST">
+      <form
+        th:action="@{/tuotteet}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
         <div class="row">
           <div class="col-25">
             <label for="nimi">Tuotteen nimi:</label>
@@ -78,11 +83,12 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-25">
+          <div class="col-25" enctype="multipart/form-data">
             <label for="kuva">Kuva:</label>
           </div>
           <div class="col-75">
-            <input type="text" name="kuva" />
+            <input type="file" name="kuva" id="kuva" />
+            <!-- <input type="text" name="kuva" /> -->
           </div>
         </div>
         <div class="row">
@@ -136,6 +142,14 @@
           <input type="submit" value="Lisää tuote" />
         </div>
       </form>
+
+      <!-- <form
+        method="POST"
+        th:action="@{/tuotteet}"
+        enctype="multipart/form-data"
+      >
+        <input type="file" name="kuva" id="kuva" />
+      </form> -->
     </div>
   </body>
 </html>

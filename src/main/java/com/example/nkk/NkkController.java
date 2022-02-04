@@ -1,6 +1,9 @@
 package com.example.nkk;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,10 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class NkkController {
@@ -43,15 +47,15 @@ public class NkkController {
     }
 
     @PostMapping("/tuotteet")
-    public String lisaaTuote(@RequestParam String nimi, @RequestParam String kuva, @RequestParam BigDecimal hinta,
+    public String lisaaTuote(@RequestParam String nimi, @RequestParam BigDecimal hinta,
             @RequestParam String kuvaus, @RequestParam Long osastoID,
             @RequestParam Long toimittajaID,
-            @RequestParam Long valmistajaID) {
-
+            @RequestParam Long valmistajaID, @RequestParam("kuva") MultipartFile kuva) throws IOException {
         Tuote uusiTuote = new Tuote();
         uusiTuote.setNimi(nimi);
         uusiTuote.setHinta(hinta);
-        uusiTuote.setKuva(kuva);
+        uusiTuote.setKuva(kuva.getBytes());
+        ;
         uusiTuote.setKuvaus(kuvaus);
 
         Osasto osasto = osastoService.getOsastoById(osastoID);
@@ -143,6 +147,12 @@ public class NkkController {
         return "redirect:/toimittajat";
     }
 
+    @GetMapping(path = "/tuotteet/edittuote/{id}/content", produces = "image/jpg")
+    @ResponseBody
+    public byte[] get(@PathVariable Long id) {
+        return tuoteService.getTuoteById(id).getKuva();
+    }
+
     @GetMapping("/tuotteet/edittuote/{id}")
     public String naytaMuokkaaTuote(@PathVariable("id") long id, Model model) {
         Tuote tuote = tuoteService.getTuoteById(id);
@@ -150,20 +160,19 @@ public class NkkController {
         model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
         model.addAttribute("osastot", osastoService.listaaOsastot());
         model.addAttribute("toimittajat", toimittajaService.listaaToimittajat());
-
         return "edittuote";
     }
 
     @PostMapping("/tuotteet/edittuote/{id}")
-    public String muokkaaTuote(@PathVariable("id") Long id, @RequestParam String nimi, @RequestParam String kuva,
+    public String muokkaaTuote(@PathVariable("id") Long id, @RequestParam String nimi,
             @RequestParam BigDecimal hinta,
             @RequestParam String kuvaus, @RequestParam Long osastoID,
             @RequestParam Long toimittajaID,
-            @RequestParam Long valmistajaID) {
+            @RequestParam Long valmistajaID, @RequestParam("kuva") MultipartFile kuva) throws IOException {
         Tuote tuote = tuoteService.getTuoteById(id);
         tuote.setNimi(nimi);
         tuote.setHinta(hinta);
-        tuote.setKuva(kuva);
+        tuote.setKuva(kuva.getBytes());
         tuote.setKuvaus(kuvaus);
         Osasto osasto = osastoService.getOsastoById(osastoID);
         tuote.setOsasto(osasto);
@@ -179,6 +188,14 @@ public class NkkController {
     public String poistaTuote(@RequestParam(name = "tuoteId") Long id) {
         tuoteService.poistaTuote(id);
         return "redirect:/tuotteet";
+    }
+
+    @GetMapping("/kahvilaitteet")
+    public String naytaKahvilaitteet(Model model) {
+        List<Long> kahvilaitteet = Arrays.asList(3L, 4L, 5L);
+        // List<Tuote> tuotteet = tuoteService.listaaHalututTuotteet(kahvilaitteet);
+        model.addAttribute("kahvilaitteet", tuoteService.listaaHalututTuotteet(kahvilaitteet));
+        return "kahvilaitteet";
     }
 
 }

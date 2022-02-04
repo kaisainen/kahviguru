@@ -9,18 +9,14 @@
   <body>
     <table>
       <tr>
-        <th>Id</th>
         <th>Tuotteen nimi</th>
-        <th>Kuvaus</th>
         <th>Hinta</th>
         <th>Tuotekuva</th>
       </tr>
-      <tr th:each="tuote : ${tuotteet}">
-        <td th:text="${tuote.id}"></td>
+      <tr th:each="tuote : ${kahvilaitteet}">
         <td th:text="${tuote.nimi}"></td>
-        <td th:text="${tuote.kuvaus}"></td>
         <td th:text="${tuote.hinta}"></td>
-        <td th:text="${tuote.kuva}"></td>
+        <!-- <td th:text="${tuote.kuva}"></td> -->
       </tr>
     </table>
   </body>
