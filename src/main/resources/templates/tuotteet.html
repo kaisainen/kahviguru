@@ -14,42 +14,48 @@
     <link rel="stylesheet" th:href="@{/css/layout.css}" />
   </head>
   <body>
-    <table>
-      <tr>
-        <th>Id</th>
-        <th>Tuotteen nimi</th>
-        <th>Kuvaus</th>
-        <th>Hinta</th>
-        <th>Tuotekuva</th>
-        <th>Osasto</th>
-        <th>Valmistaja</th>
-        <th>Toimittaja</th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr th:each="tuote : ${tuotteet}">
-        <td th:text="${tuote.id}"></td>
-        <td th:text="${tuote.nimi}"></td>
-        <td th:text="${tuote.kuvaus}"></td>
-        <td th:text="${tuote.hinta}"></td>
-        <!-- <td th:text="${tuote.kuva}"></td> -->
-        <td></td>
-        <td th:text="${tuote.osasto.nimi}"></td>
-        <td th:text="${tuote.valmistaja.nimi}"></td>
-        <td th:text="${tuote.toimittaja.nimi}"></td>
-        <td>
-          <button class="btn btn-danger">
-            <a th:href="|@{/tuotteet/poista/(tuoteId=${tuote.id})}|">Poista</a>
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-info">
-            <a th:href="|@{/tuotteet/edittuote/{id}(id=${tuote.id})}|"
-              >Muokkaa</a
-            >
-          </button>
-        </td>
-      </tr>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Tuotteen nimi</th>
+          <th scope="col">Kuvaus</th>
+          <th scope="col">Hinta</th>
+          <th scope="col">Tuotekuva</th>
+          <th scope="col">Osasto</th>
+          <th scope="col">Valmistaja</th>
+          <th scope="col">Toimittaja</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="tuote : ${tuotteet}">
+          <td th:text="${tuote.id}"></td>
+          <td th:text="${tuote.nimi}"></td>
+          <td th:text="${tuote.kuvaus}"></td>
+          <td th:text="${tuote.hinta}"></td>
+          <!-- <td th:text="${tuote.kuva}"></td> -->
+          <td></td>
+          <td th:text="${tuote.osasto.nimi}"></td>
+          <td th:text="${tuote.valmistaja.nimi}"></td>
+          <td th:text="${tuote.toimittaja.nimi}"></td>
+          <td>
+            <button class="btn btn-danger">
+              <a th:href="|@{/tuotteet/poista/(tuoteId=${tuote.id})}|"
+                >Poista</a
+              >
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info">
+              <a th:href="|@{/tuotteet/edittuote/{id}(id=${tuote.id})}|"
+                >Muokkaa</a
+              >
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="container">

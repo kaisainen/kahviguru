@@ -19,36 +19,40 @@
       <p>header with links etc</p>
     </header>
 
-    <table>
-      <tr>
-        <th>Id</th>
-        <th>Toimittajan nimi</th>
-        <th>Yhteyshenkilö</th>
-        <th>Yhteyshenkilön email</th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr th:each="toimittaja : ${toimittajat}">
-        <td th:text="${toimittaja.id}"></td>
-        <td th:text="${toimittaja.nimi}"></td>
-        <td th:text="${toimittaja.yhteyshenkilo}"></td>
-        <td th:text="${toimittaja.yhteyshenkiloemail}"></td>
-        <td>
-          <button class="btn btn-danger">
-            <a
-              th:href="|@{/toimittajat/poista/(toimittajaId=${toimittaja.id})}|"
-              >Poista</a
-            >
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-info">
-            <a th:href="|@{/toimittajat/edit/{id}(id=${toimittaja.id})}|"
-              >Muokkaa</a
-            >
-          </button>
-        </td>
-      </tr>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Toimittajan nimi</th>
+          <th scope="col">Yhteyshenkilö</th>
+          <th scope="col">Yhteyshenkilön email</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="toimittaja : ${toimittajat}">
+          <td th:text="${toimittaja.id}"></td>
+          <td th:text="${toimittaja.nimi}"></td>
+          <td th:text="${toimittaja.yhteyshenkilo}"></td>
+          <td th:text="${toimittaja.yhteyshenkiloemail}"></td>
+          <td>
+            <button class="btn btn-danger">
+              <a
+                th:href="|@{/toimittajat/poista/(toimittajaId=${toimittaja.id})}|"
+                >Poista</a
+              >
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info">
+              <a th:href="|@{/toimittajat/edit/{id}(id=${toimittaja.id})}|"
+                >Muokkaa</a
+              >
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="container">

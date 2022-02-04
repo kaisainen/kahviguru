@@ -18,34 +18,42 @@
       <p>header with links etc</p>
     </header>
 
-    <table>
-      <tr>
-        <th>Id</th>
-        <th>Valmistajan nimi</th>
-        <th>Url</th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr th:each="valmistaja : ${valmistajat}">
-        <td th:text="${valmistaja.id}"></td>
-        <td th:text="${valmistaja.nimi}"></td>
-        <td th:text="${valmistaja.url}"></td>
-        <td>
-          <button class="btn btn-danger">
-            <a
-              th:href="|@{/valmistajat/poista/(valmistajaId=${valmistaja.id})}|"
-              >Poista</a
-            >
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-info">
-            <a th:href="|@{/valmistajat/muokkaa/{id}(id=${valmistaja.id})}|"
-              >Muokkaa</a
-            >
-          </button>
-        </td>
-      </tr>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Valmistajan nimi</th>
+          <th scope="col">Url</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="valmistaja : ${valmistajat}">
+          <td th:text="${valmistaja.id}"></td>
+          <td th:text="${valmistaja.nimi}"></td>
+          <td>
+            <a th:href="${valmistaja.url}"
+              ><span th:text="${valmistaja.url}"></span
+            ></a>
+          </td>
+          <td>
+            <button class="btn btn-danger">
+              <a
+                th:href="|@{/valmistajat/poista/(valmistajaId=${valmistaja.id})}|"
+                >Poista</a
+              >
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info">
+              <a th:href="|@{/valmistajat/muokkaa/{id}(id=${valmistaja.id})}|"
+                >Muokkaa</a
+              >
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="container">
