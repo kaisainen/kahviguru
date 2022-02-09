@@ -14,6 +14,10 @@
     <link rel="stylesheet" th:href="@{/css/layout.css}" />
   </head>
   <body>
+    <header th:replace="fragments/header :: header">
+      <p>header with links etc</p>
+    </header>
+
     <button class="btn btn-dark">
       <a href="./../../tuotteet">Takaisin</a>
     </button>
@@ -39,7 +43,6 @@
     <!-- <p>Osasto: <span th:text="${tuote.osasto}">osasto</span></p> -->
 
     <form
-      action="#"
       method="POST"
       th:action="@{/tuotteet/edittuote/{id}(id=${tuote.id})}"
       th:object="${tuote}"

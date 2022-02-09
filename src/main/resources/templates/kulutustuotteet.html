@@ -23,12 +23,16 @@
     <nav aria-label="...">
       <ul class="pagination">
         <li class="page-item" th:if="${edellinen != null}">
-          <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${edellinen})}"
+          <a
+            class="page-link"
+            th:href="@{/kulutustuotteet/{id}(id=${edellinen})}"
             >Edellinen</a
           >
         </li>
         <li class="page-item" th:if="${seuraava != null}">
-          <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${seuraava})}"
+          <a
+            class="page-link"
+            th:href="@{/kulutustuotteet/{id}(id=${seuraava})}"
             >Seuraava</a
           >
         </li>
@@ -36,19 +40,20 @@
     </nav>
 
     <section class="flexContainer">
-      <div class="card" th:each="kahvilaite : ${kahvilaitteet}">
+      <div class="card" th:each="kulutustuote : ${kulutustuotteet}">
         <img
-          th:src="@{/kahvilaitteet/{id}/content(id=${kahvilaite.id})}"
+          th:src="@{/kulutustuotteet/{id}/content(id=${kulutustuote.id})}"
           class="card-img-top"
           alt="kahvinkeitin"
         />
+        <!-- <img src="images/breville.jpg" alt="" /> -->
         <div class="card-body">
-          <h5>
-            <span class="card-title" th:text="${kahvilaite.hinta}"></span> €
-          </h5>
-          <p class="card-text" th:text="${kahvilaite.nimi}"></p>
+          <h5 class="card-title" th:text="${kulutustuote.nimi}"></h5>
+          <p></p>
+            <span class="card-text" th:text="${kulutustuote.hinta}"></span> €
+          </p>
           <a
-            th:href="@{kahvilaitteet/tuotetiedot/{id}(id=${kahvilaite.id})}"
+            th:href="@{kulutustuotteet/tuotetiedot/{id}(id=${kulutustuote.id})}"
             class="btn btn-primary"
             >Näytä lisää</a
           >

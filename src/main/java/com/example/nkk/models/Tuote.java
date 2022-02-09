@@ -1,4 +1,4 @@
-package com.example.nkk;
+package com.example.nkk.models;
 
 import java.math.BigDecimal;
 

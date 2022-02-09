@@ -1,6 +1,9 @@
-package com.example.nkk;
+package com.example.nkk.services;
 
 import java.util.List;
+
+import com.example.nkk.models.Toimittaja;
+import com.example.nkk.repositories.ToimittajaRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

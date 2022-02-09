@@ -1,8 +1,11 @@
-package com.example.nkk;
+package com.example.nkk.services;
 
 import java.util.List;
 
 import javax.websocket.server.ServerEndpoint;
+
+import com.example.nkk.models.Osasto;
+import com.example.nkk.repositories.OsastoRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

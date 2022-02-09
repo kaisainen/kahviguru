@@ -1,6 +1,9 @@
-package com.example.nkk;
+package com.example.nkk.services;
 
 import java.util.List;
+
+import com.example.nkk.models.Valmistaja;
+import com.example.nkk.repositories.ValmistajaRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +23,8 @@ public class ValmistajaService {
     }
 
     public Valmistaja muokkaaValmistajaa(Valmistaja valmistaja) {
-        return valmistajaRepo.save(valmistaja);
+        valmistajaRepo.save(valmistaja);
+        return valmistaja;
     }
 
     public Valmistaja getValmistajaById(long id) {

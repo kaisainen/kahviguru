@@ -1,4 +1,6 @@
-package com.example.nkk;
+package com.example.nkk.repositories;
+
+import com.example.nkk.models.Valmistaja;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
