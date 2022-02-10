@@ -2,9 +2,6 @@ package com.example.nkk.controllers;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-
 import com.example.nkk.models.Osasto;
 import com.example.nkk.models.Toimittaja;
 import com.example.nkk.models.Tuote;
