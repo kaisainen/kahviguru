@@ -1,40 +1,130 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap"); */
 
+@import url("https://fonts.googleapis.com/css2?family=Amita&family=Bitter&family=Fredoka+One&family=Lobster&family=Milonga&family=Montserrat+Alternates&family=Outfit&family=Poppins&family=Rammetto+One&display=swap");
+:root {
+  --bs-primary: #4b4a4a;
+}
+
+html {
+  font-size: 62.5%;
+}
 body {
-  font-size: 0.9rem;
+  font-size: 1.8rem;
   background-color: white;
   margin: auto;
   font-family: "Poppins", sans-serif;
-  max-width: 80%;
 }
+
+.kahviguru {
+  font-family: "Rammetto One", cursive;
+  font-size: 9rem;
+  /* padding: 1rem 0 1rem 1rem; */
+  color: #c01719;
+  /* margin-top: 2rem; */
+}
+.kahviguru-a {
+  color: #c01719;
+}
+header {
+  margin: 0;
+  padding: 0;
+}
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  padding: 1rem;
+  /* color: #4b4a4a; */
+  background-color: #4b4a4a;
+  height: 150px;
+}
+.grid-span5 {
+  grid-column: 1 / span 3;
+  align-self: center;
+}
+.admin-linkki {
+  font-size: 2.2rem;
+  padding: 2rem;
+  justify-self: end;
+  color: #c01719;
+}
+.kauppa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  padding: 1rem;
+  /* color: #4b4a4a; */
+  background-color: #dcd3cc;
+}
+
+.grid-span {
+  grid-column: 1 / span 4;
+}
+.tuotespan1 {
+  grid-column: 1 / span 1;
+  font-size: 3rem;
+  font-weight: 600;
+}
+.tuotespan2 {
+  grid-column: 2 / span 1;
+  font-size: 3rem;
+  font-weight: 600;
+}
+.tuotespan3 {
+  grid-column: 3 / span 1;
+  font-size: 3rem;
+  font-weight: 600;
+}
+ul {
+  list-style: none;
+}
+
 .hero {
-  height: 500px;
+  height: 600px;
   max-width: 100%;
-  background-image: url("/images/coffee.jpg");
+  background-image: url("/images/kupit.jpg");
   background-size: cover;
-  /* vertical-align: middle; */
+  vertical-align: middle;
   background-position: center;
   margin-bottom: 1rem;
 }
+.nav-grid {
+  display: grid;
+  grid-template-columns: 400px 400px;
+  grid-template-rows: auto;
+  justify-content: center;
+  padding-top: 3rem;
+  column-gap: 2rem;
+}
+.nav-grid * > {
+  justify-self: center;
+}
+.h2-center {
+  text-align: center;
+  color: #4b4a4a;
+  font-weight: 600;
+  font-size: 3.5rem;
+  background-color: white;
+  margin-bottom: 0;
+  padding-top: 1rem;
+}
+a {
+  text-decoration: none;
+  /* color: black; */
+}
 
-table {
-  border-collapse: collapse;
-  width: 80%;
+a:hover {
+  color: unset;
 }
-/* table,
-td,
-th {
-  border: 1px solid black;
-} */
-th {
-  padding: 0.5rem;
+.nav-a {
+  color: #4b4a4a;
 }
-td,
-th {
-  padding: 0.5rem;
-  border-bottom: 1px solid black;
+.nav-a:hover {
+  color: #c01719;
 }
-
+.table-position {
+  margin: 4rem 6rem 0 6rem;
+}
 .form-container {
   max-width: 100%;
 }
@@ -74,7 +164,7 @@ button a {
 } */
 
 input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: rgb(75, 14, 14);
 }
 
 .container {
@@ -102,15 +192,103 @@ input[type="submit"]:hover {
   display: table;
   clear: both;
 }
-.flexContainer {
+/* .flexContainer {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
 .flexContainer * > {
   flex-basis: 30%;
+} */
+.total {
+  width: 900px;
+  margin: auto;
+  margin-top: 2rem;
 }
 .card {
   width: 300px;
-  margin: 1.5rem;
+  padding: 2rem;
+  margin: 10px;
+  border-radius: 10px;
+  border: solid lightgray 0.5px;
+}
+h5 {
+  font-size: 1.8rem;
+}
+.flexContainer {
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  grid-template-rows: auto;
+  gap: 2rem;
+  justify-content: center;
+}
+.btn {
+  font-size: 1.6rem;
+}
+.page-link {
+  color: #4b4a4a;
+}
+.btn-primary {
+  background-color: #4b4a4a;
+  border-color: #4b4a4a;
+}
+.btn-primary:hover {
+  background-color: #c01719;
+  border-color: #c01719;
+}
+.footer {
+  font-size: 1.7rem;
+  color: #4b4a4a;
+  margin: 4rem 2rem 2rem 2rem;
+}
+.nav-kauppa {
+  /* margin-left: 2rem;
+  margin-right: 2rem; */
+  background-color: #dcd3cc;
+  padding-left: 3rem;
+}
+.pageview {
+  width: 800px;
+  margin: auto;
+  /* padding: 150px 30px 30px 30px; */
+}
+/* .container-tuotetiedot {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  border: solid lightgray 0.5px;
+} */
+.container-tuotetiedot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  border: solid lightgray 1px;
+  border-radius: 6px;
+  padding: 3rem;
+  margin-bottom: 7rem;
+}
+.tuotetiedot {
+  margin-top: 3rem;
+  padding-left: 2rem;
+}
+.tuotekuvaus {
+  margin-top: 8rem;
+  padding-right: 2rem;
+}
+.bold {
+  font-weight: 600;
+}
+.h2-tuotetiedot {
+  padding-bottom: 3rem;
+  font-weight: 600;
+  font-size: 3rem;
+}
+.takaisin {
+  margin-top: 6rem;
+  margin-left: 18rem;
+  margin-bottom: 5rem;
+}
+.tuotenappi {
+  margin-top: 3rem;
+  margin-bottom: 6rem;
 }

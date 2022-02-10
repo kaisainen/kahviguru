@@ -15,12 +15,16 @@
   </head>
   <body>
     <header th:replace="fragments/header :: header">
-      <p>header with links etc</p>
+      <p></p>
     </header>
+    <nav th:replace="fragments/nav :: nav">
+      <p></p>
+    </nav>
 
-    <div>Total Items: [[${totalItems}]]</div>
 
-    <nav aria-label="...">
+    <div class="total">Total Items: [[${totalItems}]]</div>
+
+    <nav aria-label="..." class="total">
       <ul class="pagination">
         <li class="page-item" th:if="${edellinen != null}">
           <a
@@ -60,5 +64,9 @@
         </div>
       </div>
     </section>
+    <footer th:replace="fragments/footer :: footer">
+      <p class="footer"></p>
+    </footer>
+
   </body>
 </html>

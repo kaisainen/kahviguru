@@ -17,42 +17,47 @@
     <header th:replace="fragments/header :: header">
       <p>header with links etc</p>
     </header>
+    <nav th:replace="fragments/admin-nav :: admin-nav">
+      <p>header with links etc</p>
+    </nav>
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Valmistajan nimi</th>
-          <th scope="col">Valmistajan www-sivut</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="valmistaja : ${valmistajat}">
-          <td th:text="${valmistaja.nimi}"></td>
-          <td>
-            <a th:href="${valmistaja.url}"
-              ><span th:text="${valmistaja.url}"></span
-            ></a>
-          </td>
-          <td>
-            <button class="btn btn-danger">
-              <a
-                th:href="|@{/valmistajat/poista/(valmistajaId=${valmistaja.id})}|"
-                >Poista</a
-              >
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-info">
-              <a th:href="|@{/valmistajat/muokkaa/{id}(id=${valmistaja.id})}|"
-                >Muokkaa</a
-              >
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <section class="table-position">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Valmistajan nimi</th>
+            <th scope="col">Valmistajan www-sivut</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="valmistaja : ${valmistajat}">
+            <td th:text="${valmistaja.nimi}"></td>
+            <td>
+              <a th:href="${valmistaja.url}"
+                ><span th:text="${valmistaja.url}"></span
+              ></a>
+            </td>
+            <td>
+              <button class="btn btn-danger">
+                <a
+                  th:href="|@{/valmistajat/poista/(valmistajaId=${valmistaja.id})}|"
+                  >Poista</a
+                >
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-info">
+                <a th:href="|@{/valmistajat/muokkaa/{id}(id=${valmistaja.id})}|"
+                  >Muokkaa</a
+                >
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
     <div class="container">
       <form
@@ -70,7 +75,7 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="url">Url:</label>
+            <label for="url">WWW-sivut:</label>
           </div>
           <div class="col-75">
             <input type="text" name="url" />
@@ -81,5 +86,8 @@
         <button type="submit" class="btn btn-primary">Lisää valmistaja</button>
       </form>
     </div>
+    <footer th:replace="fragments/footer :: footer">
+      <p class="footer"></p>
+    </footer>
   </body>
 </html>

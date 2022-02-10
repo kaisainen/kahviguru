@@ -18,40 +18,45 @@
     <header th:replace="fragments/header :: header">
       <p>header with links etc</p>
     </header>
+    <nav th:replace="fragments/admin-nav :: admin-nav">
+      <p>header with links etc</p>
+    </nav>
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Toimittajan nimi</th>
-          <th scope="col">Yhteyshenkilön nimi</th>
-          <th scope="col">Yhteyshenkilön email</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="toimittaja : ${toimittajat}">
-          <td th:text="${toimittaja.nimi}"></td>
-          <td th:text="${toimittaja.yhteyshenkilo}"></td>
-          <td th:text="${toimittaja.yhteyshenkiloemail}"></td>
-          <td>
-            <button class="btn btn-danger">
-              <a
-                th:href="|@{/toimittajat/poista/(toimittajaId=${toimittaja.id})}|"
-                >Poista</a
-              >
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-info">
-              <a th:href="|@{/toimittajat/edit/{id}(id=${toimittaja.id})}|"
-                >Muokkaa</a
-              >
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <section class="table-position">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Toimittajan nimi</th>
+            <th scope="col">Yhteyshenkilön nimi</th>
+            <th scope="col">Yhteyshenkilön email</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="toimittaja : ${toimittajat}">
+            <td th:text="${toimittaja.nimi}"></td>
+            <td th:text="${toimittaja.yhteyshenkilo}"></td>
+            <td th:text="${toimittaja.yhteyshenkiloemail}"></td>
+            <td>
+              <button class="btn btn-danger">
+                <a
+                  th:href="|@{/toimittajat/poista/(toimittajaId=${toimittaja.id})}|"
+                  >Poista</a
+                >
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-info">
+                <a th:href="|@{/toimittajat/edit/{id}(id=${toimittaja.id})}|"
+                  >Muokkaa</a
+                >
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
     <div class="container">
       <form th:action="@{/toimittajat}" method="POST">
@@ -84,5 +89,8 @@
         <button type="submit" class="btn btn-primary">Lisää toimittaja</button>
       </form>
     </div>
+    <footer th:replace="fragments/footer :: footer">
+      <p class="footer"></p>
+    </footer>
   </body>
 </html>

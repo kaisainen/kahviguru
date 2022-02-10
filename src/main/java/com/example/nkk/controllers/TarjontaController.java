@@ -1,15 +1,10 @@
 package com.example.nkk.controllers;
 
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.example.nkk.models.Osasto;
-import com.example.nkk.models.Toimittaja;
 import com.example.nkk.models.Tuote;
-import com.example.nkk.models.Valmistaja;
 import com.example.nkk.services.OsastoService;
 import com.example.nkk.services.ToimittajaService;
 import com.example.nkk.services.TuoteService;
@@ -19,13 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -58,7 +51,7 @@ public class TarjontaController {
     public String naytaKahvilaitteet(Model model, @PathVariable(name = "sivunum") Integer sivunum) {
         List<Tuote> tuotteet = new ArrayList<Tuote>();
         List<Long> kahvilaitteet = Arrays.asList(3L, 4L, 5L);
-        Pageable pageable = PageRequest.of(sivunum - 1, 12);
+        Pageable pageable = PageRequest.of(sivunum - 1, 6);
         Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(kahvilaitteet, pageable);
         tuotteet = tuotesivut.getContent();
         Integer totalSivut = tuotesivut.getTotalPages();

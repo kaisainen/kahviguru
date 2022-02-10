@@ -18,87 +18,95 @@
       <p>header with links etc</p>
     </header>
 
-    <button class="btn btn-dark">
+    <button class="btn btn-dark takaisin">
       <a href="./../../tuotteet">Takaisin</a>
     </button>
 
-    <p>Tuote: <span th:text="${tuote.nimi}">nimi</span></p>
-    <p>
-      Tuotteen kuvaus:
-      <span th:text="${tuote.kuvaus}">kuvaus</span>
-    </p>
-    <p>Tuotteen hinta: <span th:text="${tuote.hinta}">hinta</span>€</p>
-    <p>Osasto: <span th:text="${tuote.osasto.nimi}">osasto</span></p>
-    <p>
-      Valmistaja: <span th:text="${tuote.valmistaja.nimi}">valmistaja</span>
-    </p>
-    <p>
-      toimittaja: <span th:text="${tuote.toimittaja.nimi}">toimittaja</span>
-    </p>
-    <figure>
-      <img th:src="@{/tuotteet/edittuote/{id}/content(id=${tuote.id})}" />
-
-      <!-- <img src="/images/sieppaa.png" alt="" /> -->
-    </figure>
-    <!-- <p>Osasto: <span th:text="${tuote.osasto}">osasto</span></p> -->
-
-    <form
-      method="POST"
-      th:action="@{/tuotteet/edittuote/{id}(id=${tuote.id})}"
-      th:object="${tuote}"
-    >
-      <label for="nimi">Nimi</label>
-      <input type="text" th:field="*{nimi}" id="nimi" placeholder="Nimi" />
-
-      <label for="kuvaus">Kuvaus</label>
-      <input
-        type="text"
-        th:field="*{kuvaus}"
-        id="kuvaus"
-        placeholder="kuvaus"
-      />
-
-      <!-- <label for="kuva">Kuva:</label>
-    </div>
-    <div class="col-75">
-      <input type="file" name="kuva" id="kuva" th:field="*{kuva}" />
-    </div>
-  </div> -->
-
-      <label for="hinta">hinta</label>
-      <input type="text" th:field="*{hinta}" id="hinta" placeholder="hinta" />
-
-      <label for="osasto">Osaston nimi:</label>
-      <select th:name="osastoID">
-        <option selected>Valitse osasto</option>
-        <option
-          th:each="osasto : ${osastot}"
-          th:value="${osasto.id}"
-          th:text="${osasto.nimi}"
+    <section class="pageview">
+      <section class="container-tuotetiedot">
+        <section class="tuotetiedot">
+          <h2 class="h2-tuotetiedot">Tuotetiedot:</h2>
+          <p>
+            <span class="bold">Tuote: </span>
+            <span th:text="${tuote.nimi}">nimi</span>
+          </p>
+          <p>
+            <span class="bold">Tuotteen kuvaus:</span>
+            <span th:text="${tuote.kuvaus}">kuvaus</span>
+          </p>
+          <p>
+            <span class="bold">Tuotteen hinta: </span>
+            <span th:text="${tuote.hinta}">hinta</span>€
+          </p>
+          <p>
+            <span class="bold">Osasto: </span>
+            <span th:text="${tuote.osasto.nimi}">osasto</span>
+          </p>
+          <p>
+            <span class="bold">Valmistaja:</span>
+            <span th:text="${tuote.valmistaja.nimi}">valmistaja</span>
+          </p>
+          <p>
+            <span class="bold">Toimittaja:</span>
+            <span th:text="${tuote.toimittaja.nimi}">toimittaja</span>
+          </p>
+        </section>
+        <figure class="tuotekuva">
+          <img th:src="@{/tuotteet/edittuote/{id}/content(id=${tuote.id})}" />
+          <!-- <img src="/images/sieppaa.png" alt="" /> -->
+        </figure>
+        <!-- <p>Osasto: <span th:text="${tuote.osasto}">osasto</span></p> -->
+      </section>
+      <form
+        method="POST"
+        th:action="@{/tuotteet/edittuote/{id}(id=${tuote.id})}"
+        th:object="${tuote}"
+      >
+        <label for="nimi">Nimi</label>
+        <input type="text" th:field="*{nimi}" id="nimi" placeholder="Nimi" />
+        <label for="kuvaus">Kuvaus</label>
+        <input
+          type="text"
+          th:field="*{kuvaus}"
+          id="kuvaus"
+          placeholder="kuvaus"
         />
-      </select>
-
-      <label for="toimittajanimi">Toimittaja:</label>
-      <select th:name="toimittajaID">
-        <option selected>Valitse toimittaja</option>
-        <option
-          th:each="toimittaja : ${toimittajat}"
-          th:value="${toimittaja.id}"
-          th:text="${toimittaja.nimi}"
-        />
-      </select>
-
-      <label for="valmistajanimi">Valmistaja:</label>
-      <select th:name="valmistajaID">
-        <option selected>Valitse valmistaja</option>
-        <option
-          th:each="valmistaja : ${valmistajat}"
-          th:value="${valmistaja.id}"
-          th:text="${valmistaja.nimi}"
-        />
-      </select>
-
-      <input type="submit" value="Päivitä tuotteen tiedot" />
-    </form>
+        <label for="hinta">hinta</label>
+        <input type="text" th:field="*{hinta}" id="hinta" placeholder="hinta" />
+        <label for="osasto">Osaston nimi:</label>
+        <select th:name="osastoID">
+          <option selected>Valitse osasto</option>
+          <option
+            th:each="osasto : ${osastot}"
+            th:value="${osasto.id}"
+            th:text="${osasto.nimi}"
+          />
+        </select>
+        <label for="toimittajanimi">Toimittaja:</label>
+        <select th:name="toimittajaID">
+          <option selected>Valitse toimittaja</option>
+          <option
+            th:each="toimittaja : ${toimittajat}"
+            th:value="${toimittaja.id}"
+            th:text="${toimittaja.nimi}"
+          />
+        </select>
+        <label for="valmistajanimi">Valmistaja:</label>
+        <select th:name="valmistajaID">
+          <option selected>Valitse valmistaja</option>
+          <option
+            th:each="valmistaja : ${valmistajat}"
+            th:value="${valmistaja.id}"
+            th:text="${valmistaja.nimi}"
+          />
+        </select>
+        <button type="submit" class="btn btn-primary tuotenappi">
+          Päivitä tuotteen tiedot
+        </button>
+      </form>
+    </section>
+    <footer th:replace="fragments/footer :: footer">
+      <p class="footer"></p>
+    </footer>
   </body>
 </html>

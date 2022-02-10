@@ -149,6 +149,12 @@ public class AdminController {
         return "redirect:/valmistajat/muokkaa/" + id;
     }
 
+    @RequestMapping(value = "valmistajat/poista", method = RequestMethod.GET)
+    public String poistaValmistaja(@RequestParam(name = "valmistajaId") Long id) {
+        valmistajaService.poistaValmistaja(id);
+        return "redirect:/valmistajat";
+    }
+
     // TOIMITTAJIEN HALLINTA
 
     @GetMapping("/toimittajat")
@@ -178,12 +184,6 @@ public class AdminController {
         muokkaaToimittaja.setYhteyshenkiloemail(toimittaja.getYhteyshenkiloemail());
         toimittajaService.muokkaaToimittaja(muokkaaToimittaja);
         return "redirect:/toimittajat/edit/" + id;
-    }
-
-    @RequestMapping(value = "valmistajat/poista", method = RequestMethod.GET)
-    public String poistaValmistaja(@RequestParam(name = "valmistajaId") Long id) {
-        valmistajaService.poistaValmistaja(id);
-        return "redirect:/valmistajat";
     }
 
     @RequestMapping(value = "toimittajat/poista", method = RequestMethod.GET)

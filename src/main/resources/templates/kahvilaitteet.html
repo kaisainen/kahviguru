@@ -15,12 +15,15 @@
   </head>
   <body>
     <header th:replace="fragments/header :: header">
-      <p>header with links etc</p>
+      <p></p>
     </header>
+    <nav th:replace="fragments/nav :: nav">
+      <p></p>
+    </nav>
 
-    <div>Total Items: [[${totalItems}]]</div>
+    <div class="total">Tuotteita: [[${totalItems}]]</div>
 
-    <nav aria-label="...">
+    <nav aria-label="..." class="total">
       <ul class="pagination">
         <li class="page-item" th:if="${edellinen != null}">
           <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${edellinen})}"
@@ -43,10 +46,10 @@
           alt="kahvinkeitin"
         />
         <div class="card-body">
-          <h5>
-            <span class="card-title" th:text="${kahvilaite.hinta}"></span> €
-          </h5>
-          <p class="card-text" th:text="${kahvilaite.nimi}"></p>
+          <h5 class="card-title" th:text="${kahvilaite.nimi}"></h5>
+          <p></p>
+            <span class="card-text" th:text="${kahvilaite.hinta}"></span> €
+          </p>
           <a
             th:href="@{kahvilaitteet/tuotetiedot/{id}(id=${kahvilaite.id})}"
             class="btn btn-primary"
@@ -55,5 +58,8 @@
         </div>
       </div>
     </section>
+    <footer th:replace="fragments/footer :: footer">
+      <p class="footer"></p>
+    </footer>
   </body>
 </html>

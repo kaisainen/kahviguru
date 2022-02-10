@@ -17,45 +17,48 @@
     <header th:replace="fragments/header :: header">
       <p>header with links etc</p>
     </header>
+    <nav th:replace="fragments/admin-nav :: admin-nav">
+      <p>header with links etc</p>
+    </nav>
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Tuotteen nimi</th>
-          <th scope="col">Kuvaus</th>
-          <th scope="col">Hinta</th>
-          <th scope="col">Osasto</th>
-          <th scope="col">Valmistaja</th>
-          <th scope="col">Toimittaja</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="tuote : ${tuotteet}">
-          <td th:text="${tuote.nimi}"></td>
-          <td th:text="${tuote.kuvaus}"></td>
-          <td><span th:text="${tuote.hinta}"></span> €</td>
-          <td th:text="${tuote.osasto.nimi}"></td>
-          <td th:text="${tuote.valmistaja.nimi}"></td>
-          <td th:text="${tuote.toimittaja.nimi}"></td>
-          <td>
-            <button class="btn btn-danger">
-              <a th:href="|@{/tuotteet/poista/(tuoteId=${tuote.id})}|"
-                >Poista</a
-              >
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-info">
-              <a th:href="|@{/tuotteet/edittuote/{id}(id=${tuote.id})}|"
-                >Muokkaa</a
-              >
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <section class="table-position">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Tuotteen nimi</th>
+            <th scope="col">Hinta</th>
+            <th scope="col">Osasto</th>
+            <th scope="col">Valmistaja</th>
+            <th scope="col">Toimittaja</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="tuote : ${tuotteet}">
+            <td th:text="${tuote.nimi}"></td>
+            <td><span th:text="${tuote.hinta}"></span> €</td>
+            <td th:text="${tuote.osasto.nimi}"></td>
+            <td th:text="${tuote.valmistaja.nimi}"></td>
+            <td th:text="${tuote.toimittaja.nimi}"></td>
+            <td>
+              <button class="btn btn-danger">
+                <a th:href="|@{/tuotteet/poista/(tuoteId=${tuote.id})}|"
+                  >Poista</a
+                >
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-info">
+                <a th:href="|@{/tuotteet/edittuote/{id}(id=${tuote.id})}|"
+                  >Muokkaa</a
+                >
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
     <div class="container">
       <form
@@ -146,5 +149,8 @@
         <button type="submit" class="btn btn-primary">Lisää tuote</button>
       </form>
     </div>
+    <footer th:replace="fragments/footer :: footer">
+      <p class="footer"></p>
+    </footer>
   </body>
 </html>
