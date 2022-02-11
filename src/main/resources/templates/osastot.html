@@ -29,22 +29,26 @@
             <th scope="col">Osaston id</th>
             <th scope="col">Osaston nimi</th>
             <th scope="col">OsastoIDP</th>
-            <th scope="col"></th>
+            <!-- <th scope="col"></th> -->
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
+          <!-- <tr th:if="${#lists.isEmpty(osastot)}">
+            <td colspan="5">No Records found. Add some...!</td>
+          </tr> -->
+
           <tr th:each="osasto : ${osastot}">
             <td th:text="${osasto.id}"></td>
             <td th:text="${osasto.nimi}"></td>
             <td th:text="${osasto.osastoIDP}"></td>
-            <td>
+            <!-- <td>
               <button class="btn btn-danger">
                 <a th:href="|@{/osastot/poista/(osastoId=${osasto.id})}|"
                   >Poista</a
                 >
               </button>
-            </td>
+            </td> -->
             <td>
               <button class="btn btn-info">
                 <a th:href="|@{/osastot/editosasto/{id}(id=${osasto.id})}|"
