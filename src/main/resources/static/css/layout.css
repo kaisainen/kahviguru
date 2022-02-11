@@ -75,6 +75,12 @@ header {
   font-size: 3rem;
   font-weight: 600;
 }
+.tuotespan4 {
+  grid-column: 4 / span 1;
+  font-size: 3rem;
+  font-weight: 600;
+}
+
 ul {
   list-style: none;
 }

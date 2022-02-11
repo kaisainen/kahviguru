@@ -152,7 +152,43 @@ public class AdminController {
         return "redirect:/valmistajat";
     }
 
-    // TOIMITTAJIEN HALLINTA
+    // OSASTOJEN HALLINTA
+
+    @GetMapping("/osastot")
+    public String naytaOsastot(Model model) {
+        model.addAttribute("osastot", osastoService.listaaOsastot());
+        return "osastot";
+    }
+
+    @PostMapping("/osastot")
+    public String lisaaOsasto(Model model, @ModelAttribute Osasto osasto) {
+        osastoService.lisaaOsasto(osasto);
+        return "redirect:/osastot";
+    }
+
+    @GetMapping("/osastot/editosasto/{id}")
+    public String naytaMuokkaaOsasto(@PathVariable("id") long id, Model model) {
+        Osasto osasto = osastoService.getOsastoById(id);
+        model.addAttribute("osasto", osasto);
+        return "editosasto";
+    }
+
+    @PostMapping("/osastot/editosasto/{id}")
+    public String muokkaaOsastoa(@PathVariable("id") Long id, @ModelAttribute Osasto osasto) {
+        Osasto muokkaaOsastoa = osastoService.getOsastoById(id);
+        muokkaaOsastoa.setNimi(osasto.getNimi());
+        muokkaaOsastoa.setOsastoIDP(osasto.getOsastoIDP());
+        osastoService.muokkaaOsastoa(muokkaaOsastoa);
+        return "redirect:/osastot/editosasto/" + id;
+    }
+
+    @RequestMapping(value = "osastot/poista", method = RequestMethod.GET)
+    public String poistaOsasto(@RequestParam(name = "osastoId") Long id) {
+        osastoService.poistaOsasto(id);
+        return "redirect:/osastot";
+    }
+
+    // HALLINNOI TOIMITTAJIA
 
     @GetMapping("/toimittajat")
     public String naytaToimittajat(Model model) {

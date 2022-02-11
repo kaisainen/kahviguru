@@ -22,4 +22,16 @@ public class OsastoService {
         return osastoRepo.getById(id);
     }
 
+    public void lisaaOsasto(Osasto osasto) {
+        osastoRepo.save(osasto);
+    }
+
+    public Osasto muokkaaOsastoa(Osasto osasto) {
+        return osastoRepo.save(osasto);
+    }
+
+    public void poistaOsasto(long id) {
+        osastoRepo.deleteById(id);
+    }
+
 }

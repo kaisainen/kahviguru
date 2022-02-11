@@ -23,6 +23,8 @@ public class Tuote extends AbstractPersistable<Long> { // luo long-pääavaimet 
     private BigDecimal hinta;
     // private String kuva;
     // tuote kuuluu yhteen osastoon
+    // @Type(type = "org.hibernate.type.BinaryType")
+    // @Basic(fetch = FetchType.EAGER)
     @Lob
     private byte[] kuva;
     @ManyToOne
