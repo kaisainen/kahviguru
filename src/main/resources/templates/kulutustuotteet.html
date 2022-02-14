@@ -45,11 +45,12 @@
 
     <section class="flexContainer">
       <div class="card" th:each="kulutustuote : ${kulutustuotteet}">
-        <img
+        <!-- <img
           th:src="@{/kulutustuotteet/{id}/content(id=${kulutustuote.id})}"
           class="card-img-top"
           alt="kahvinkeitin"
-        />
+        /> -->
+        <img src="/images/pavut.jpg" class="card-img-top" alt="">
         <!-- <img src="images/breville.jpg" alt="" /> -->
         <div class="card-body">
           <h5 class="card-title" th:text="${kulutustuote.nimi}"></h5>

@@ -70,7 +70,6 @@ public class AdminController {
         Toimittaja toimittaja = toimittajaService.getToimittajaById(toimittajaID);
         uusiTuote.setToimittaja(toimittaja);
         tuoteService.lisaaTuote(uusiTuote);
-
         return "redirect:/tuotteet";
     }
 
