@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Type;
@@ -25,6 +26,7 @@ public class Tuote extends AbstractPersistable<Long> { // luo long-pääavaimet 
     private BigDecimal hinta;
     // private String kuva;
     // tuote kuuluu yhteen osastoon
+    @Lob
     @Type(type = "org.hibernate.type.BinaryType")
     @Basic(fetch = FetchType.EAGER)
     private byte[] kuva;
