@@ -60,9 +60,7 @@ public class AdminController {
         uusiTuote.setNimi(nimi);
         uusiTuote.setHinta(hinta);
         uusiTuote.setKuva(kuva.getBytes());
-        ;
         uusiTuote.setKuvaus(kuvaus);
-
         Osasto osasto = osastoService.getOsastoById(osastoID);
         uusiTuote.setOsasto(osasto);
         Valmistaja valmistaja = valmistajaService.getValmistajaById(valmistajaID);
