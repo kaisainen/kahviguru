@@ -1,4 +1,4 @@
-package com.example.nkk;
+package com.example.nkk.models;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
