@@ -47,7 +47,15 @@
     </table>
 
     <div class="container">
+<<<<<<< Updated upstream
       <form th:action="@{/valmistajat}" method="POST">
+=======
+      <form
+        th:action="@{/valmistajat/lisaa}"
+        th:object="${valmistaja}"
+        method="POST"
+      >
+>>>>>>> Stashed changes
         <div class="row">
           <div class="col-25">
             <label for="nimi">Valmistaja:</label>

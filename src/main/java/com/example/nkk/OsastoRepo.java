@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OsastoRepo extends JpaRepository<Osasto, Long> {
 
-    Osasto findByNimi(String nimi);
+    public Osasto getById(long id);
+
 }
