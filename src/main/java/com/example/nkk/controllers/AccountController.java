@@ -36,9 +36,9 @@ public class AccountController {
             return "redirect:/admin";
         }
 
-        Account a = new Account(username, passwordEncoder.encode(password), new ArrayList<>());
-        a.getAuthorities().add("ADMIN");
-        accountService.addUser(a);
+        // Account a = new Account(username, password, new ArrayList<>());
+        // a.getAuthorities().add(e)
+        accountService.addAdminUser(username, password);
         return "redirect:/admin";
     }
 

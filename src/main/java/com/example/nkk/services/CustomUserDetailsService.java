@@ -17,11 +17,13 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private AccountRepo accountRepo;
+    // private AccountRepo accountRepo;
+    private AccountService as;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepo.findByUsername(username);
+        // Account account = accountRepo.findByUsername(username);
+        Account account = as.findUserbyName(username);
         if (account == null) {
             throw new UsernameNotFoundException("No such user:" + username);
         }

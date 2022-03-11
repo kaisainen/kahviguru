@@ -6,6 +6,7 @@ import com.example.nkk.models.Account;
 import com.example.nkk.repositories.AccountRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,8 +15,15 @@ public class AccountService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public void addUser(Account account) {
-        accountRepo.save(account);
+    @Autowired
+    PasswordEncoder passwordencoder;
+
+    public void addAdminUser(String name, String password) {
+        Account a = new Account();
+        a.setUsername(name);
+        a.setPassword(passwordencoder.encode(password));
+        a.getAuthorities().add("ADMIN");
+        accountRepo.save(a);
     }
 
     public Account muokkaaAccount(Account account) {
