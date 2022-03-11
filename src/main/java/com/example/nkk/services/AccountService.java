@@ -1,5 +1,7 @@
 package com.example.nkk.services;
 
+import java.util.List;
+
 import com.example.nkk.models.Account;
 import com.example.nkk.repositories.AccountRepo;
 
@@ -26,6 +28,14 @@ public class AccountService {
 
     public Account getUserById(Long id) {
         return accountRepo.getById(id);
+    }
+
+    public List<Account> listaaAccounts() {
+        return accountRepo.findAll();
+    }
+
+    public Account findUserbyName(String username) {
+        return accountRepo.findByUsername(username);
     }
 
 }
