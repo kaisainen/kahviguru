@@ -16,12 +16,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account extends AbstractPersistable<Long> {
+public class UserInfo extends AbstractPersistable<Long> {
 
     private String username;
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
-
 }
