@@ -18,11 +18,8 @@ public class AccountService {
     @Autowired
     PasswordEncoder passwordencoder;
 
-    public void addAdminUser(String name, String password) {
+    public void addUser(Account user) {
         Account a = new Account();
-        a.setUsername(name);
-        a.setPassword(passwordencoder.encode(password));
-        a.getAuthorities().add("ADMIN");
         accountRepo.save(a);
     }
 

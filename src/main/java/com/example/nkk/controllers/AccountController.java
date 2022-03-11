@@ -1,6 +1,7 @@
 package com.example.nkk.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 
@@ -37,8 +38,12 @@ public class AccountController {
         }
 
         // Account a = new Account(username, password, new ArrayList<>());
+        Account a = new Account();
+        a.setUsername(username);
+        a.setPassword(passwordEncoder.encode(password));
+        a.setAuthorities(Arrays.asList("ADMIN"));
         // a.getAuthorities().add(e)
-        accountService.addAdminUser(username, password);
+        accountService.addUser(a);
         return "redirect:/admin";
     }
 
