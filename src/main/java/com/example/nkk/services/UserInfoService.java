@@ -8,6 +8,7 @@ import com.example.nkk.models.UserInfo;
 import com.example.nkk.repositories.UserInfoRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,10 +17,15 @@ public class UserInfoService {
     @Autowired
     private UserInfoRepo userInfoRepo;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public void addUser(String username, String password, List<String> roles) {
+        // public void addUser(String username, String password, Boolean isAdmin) {
         UserInfo u = new UserInfo();
         u.setUsername(username);
-        u.setPassword(password);
+        u.setPassword(passwordEncoder.encode(password));
+        // u.setIsADmin(isAdmin);
         u.setAuthorities(roles);
         userInfoRepo.save(u);
     }

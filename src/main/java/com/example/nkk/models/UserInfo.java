@@ -20,6 +20,7 @@ public class UserInfo extends AbstractPersistable<Long> {
 
     private String username;
     private String password;
+    // private Boolean isADmin;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
