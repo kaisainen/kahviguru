@@ -21,47 +21,53 @@
       <p></p>
     </nav>
 
-
-    <div class="total">Total Items: [[${totalItems}]]</div>
-
-    <nav aria-label="..." class="total">
-      <ul class="pagination">
-        <li class="page-item" th:if="${edellinen != null}">
-          <a
-            class="page-link"
-            th:href="@{/kulutustuotteet/{id}(id=${edellinen})}"
-            >Edellinen</a
-          >
-        </li>
-        <li class="page-item" th:if="${seuraava != null}">
-          <a
-            class="page-link"
-            th:href="@{/kulutustuotteet/{id}(id=${seuraava})}"
-            >Seuraava</a
-          >
-        </li>
-      </ul>
-    </nav>
-
-    <section class="flexContainer">
-      <div class="card" th:each="kulutustuote : ${kulutustuotteet}">
-        <img
-          th:src="@{/kulutustuotteet/{id}/content(id=${kulutustuote.id})}"
-          class="card-img-top"
-          alt="kahvinkeitin"
-        />
-        <div class="card-body">
-          <h5 class="card-title" th:text="${kulutustuote.nimi}"></h5>
-          <p></p>
-            <span class="card-text" th:text="${kulutustuote.hinta}"></span> €
-          </p>
-          <a
-            th:href="@{kulutustuotteet/tuotetiedot/{id}(id=${kulutustuote.id})}"
-            class="btn btn-primary"
-            >Näytä lisää</a
-          >
-        </div>
+    <section class="sivu-container">
+      <div class="search-box">
+        <form th:action="@{/kulutustuotteet/1}" class="searchForm">
+          <input type="text" name="searchTerm" th:value="${searchTerm}">
+          <button type="submit" value="etsi" class="btn btn-primary hakunappi">Hae</button>
+          <button type="submit" value="clear" onclick="tyhjennaHaku()" class="btn btn-primary hakunappi">Tyhjennä</button>
+        </form>
       </div>
+      <div class="total">Total Items: [[${totalItems}]]</div>
+      <nav aria-label="..." class="total">
+        <ul class="pagination">
+          <li class="page-item" th:if="${edellinen != null}">
+            <a
+              class="page-link"
+              th:href="@{/kulutustuotteet/{id}(id=${edellinen})}"
+              >Edellinen</a
+            >
+          </li>
+          <li class="page-item" th:if="${seuraava != null}">
+            <a
+              class="page-link"
+              th:href="@{/kulutustuotteet/{id}(id=${seuraava})}"
+              >Seuraava</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <section class="flexContainer">
+        <div class="card" th:each="kulutustuote : ${kulutustuotteet}">
+          <img
+            th:src="@{/kulutustuotteet/{id}/content(id=${kulutustuote.id})}"
+            class="card-img-top"
+            alt="kahvinkeitin"
+          />
+          <div class="card-body">
+            <h5 class="card-title" th:text="${kulutustuote.nimi}"></h5>
+            <p></p>
+              <span class="card-text" th:text="${kulutustuote.hinta}"></span> €
+            </p>
+            <a
+              th:href="@{kulutustuotteet/tuotetiedot/{id}(id=${kulutustuote.id})}"
+              class="btn btn-primary"
+              >Näytä lisää</a
+            >
+          </div>
+        </div>
+      </section>
     </section>
     <footer th:replace="fragments/footer :: footer">
       <p class="footer"></p>

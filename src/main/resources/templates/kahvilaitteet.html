@@ -21,45 +21,62 @@
       <p></p>
     </nav>
 
-    <div class="total">Tuotteita: [[${totalItems}]]</div>
+    <section class="sivu-container">
 
-    <nav aria-label="..." class="total">
-      <ul class="pagination">
-        <li class="page-item" th:if="${edellinen != null}">
-          <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${edellinen})}"
-            >Edellinen</a
-          >
-        </li>
-        <li class="page-item" th:if="${seuraava != null}">
-          <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${seuraava})}"
-            >Seuraava</a
-          >
-        </li>
-      </ul>
-    </nav>
-
-    <section class="flexContainer">
-      <div class="card" th:each="kahvilaite : ${kahvilaitteet}">
-        <img
-          th:src="@{/kahvilaitteet/{id}/content(id=${kahvilaite.id})}"
-          class="card-img-top"
-          alt="kahvinkeitin"
-        />
-        <div class="card-body">
-          <h5 class="card-title" th:text="${kahvilaite.nimi}"></h5>
-          <p></p>
-            <span class="card-text" th:text="${kahvilaite.hinta}"></span> €
-          </p>
-          <a
-            th:href="@{kahvilaitteet/tuotetiedot/{id}(id=${kahvilaite.id})}"
-            class="btn btn-primary"
-            >Näytä lisää</a
-          >
-        </div>
+      <div class="search-box">
+        <form th:action="@{/kahvilaitteet/1}" class="searchForm">
+          <input type="text" name="searchTerm" th:value="${searchTerm}">
+          <button type="submit" value="etsi" class="btn btn-primary hakunappi">Hae</button>
+          <button type="submit" value="clear" onclick="tyhjennaHaku()" class="btn btn-primary hakunappi">Tyhjennä</button>
+        </form>
       </div>
+
+      <div class="total">Tuotteita: [[${totalItems}]]</div>
+
+      <nav aria-label="..." class="total">
+        <ul class="pagination">
+          <li class="page-item" th:if="${edellinen != null}">
+            <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${edellinen})}"
+              >Edellinen</a
+            >
+          </li>
+          <li class="page-item" th:if="${seuraava != null}">
+            <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${seuraava})}"
+              >Seuraava</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <section class="flexContainer">
+        <div class="card" th:each="kahvilaite : ${kahvilaitteet}">
+          <img
+            th:src="@{/kahvilaitteet/{id}/content(id=${kahvilaite.id})}"
+            class="card-img-top"
+            alt="kahvinkeitin"
+          />
+          <div class="card-body">
+            <h5 class="card-title" th:text="${kahvilaite.nimi}"></h5>
+            <p></p>
+              <span class="card-text" th:text="${kahvilaite.hinta}"></span> €
+            </p>
+            <a
+              th:href="@{kahvilaitteet/tuotetiedot/{id}(id=${kahvilaite.id})}"
+              class="btn btn-primary"
+              >Näytä lisää</a
+            >
+          </div>
+        </div>
+      </section>
+
     </section>
     <footer th:replace="fragments/footer :: footer">
       <p class="footer"></p>
     </footer>
+    <script type="text/javascript">
+      function tyhjennaHaku() {
+          window.location = "[[@{/}]]";
+      }
+  </script>
   </body>
 </html>

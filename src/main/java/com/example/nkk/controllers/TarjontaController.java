@@ -14,11 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -42,17 +45,21 @@ public class TarjontaController {
     }
 
     // KAHVILAITTEET
-    @RequestMapping("/kahvilaitteet")
+    @RequestMapping(path = "/kahvilaitteet")
     public String naytaEkaSivu(Model model) {
-        return naytaKahvilaitteet(model, 1);
+        String searchTerm = "";
+        return naytaKahvilaitteet(model, 1, searchTerm);
     }
 
     @GetMapping("/kahvilaitteet/{sivunum}")
-    public String naytaKahvilaitteet(Model model, @PathVariable(name = "sivunum") Integer sivunum) {
+    public String naytaKahvilaitteet(Model model, @PathVariable(name = "sivunum") Integer sivunum,
+            @Param("searchTerm") String searchTerm) {
         List<Tuote> tuotteet = new ArrayList<Tuote>();
         List<Long> kahvilaitteet = Arrays.asList(3L, 4L, 5L);
         Pageable pageable = PageRequest.of(sivunum - 1, 6);
-        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(kahvilaitteet, pageable);
+        // String hakutermi = "";
+
+        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm, kahvilaitteet, pageable);
         tuotteet = tuotesivut.getContent();
         Integer totalSivut = tuotesivut.getTotalPages();
         if (sivunum >= 1 && sivunum < totalSivut) {
@@ -92,15 +99,19 @@ public class TarjontaController {
 
     @RequestMapping("/kulutustuotteet")
     public String naytaKulutusEkaSivu(Model model) {
-        return naytaKulutustuotteet(model, 1);
+        String searchTerm = "";
+        return naytaKulutustuotteet(model, 1, searchTerm);
     }
 
     @GetMapping("/kulutustuotteet/{sivunum}")
-    public String naytaKulutustuotteet(Model model, @PathVariable(name = "sivunum") Integer sivunum) {
+    public String naytaKulutustuotteet(Model model, @PathVariable(name = "sivunum") Integer sivunum,
+            @Param("searchTerm") String searchTerm) {
         List<Tuote> tuotteet = new ArrayList<Tuote>();
         List<Long> kulutustuotteet = Arrays.asList(6L, 7L, 8L, 9L);
         Pageable pageable = PageRequest.of(sivunum - 1, 12);
-        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(kulutustuotteet, pageable);
+        // String hakutermi = "";
+
+        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm, kulutustuotteet, pageable);
         tuotteet = tuotesivut.getContent();
         Integer totalSivut = tuotesivut.getTotalPages();
         if (sivunum >= 1 && sivunum < totalSivut) {

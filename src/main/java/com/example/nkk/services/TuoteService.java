@@ -1,5 +1,6 @@
 package com.example.nkk.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.example.nkk.models.Tuote;
@@ -41,12 +42,16 @@ public class TuoteService {
         tuoteRepo.deleteById(id);
     }
 
-    // public List<Tuote> listaaHalututTuotteet(List<Long> halututTuotteetId) {
-    // return tuoteRepo.findByOsasto_idIn(halututTuotteetId);
-    // }
+    public Page<Tuote> listaaHalututTuotteet(String searchTerm, List<Long> osastonumerot,
+            Pageable pageable) {
 
-    public Page<Tuote> listaaHalututTuotteet(List<Long> halututTuotteetId, Pageable pageable) {
-        return tuoteRepo.findByOsasto_IdIn(halututTuotteetId, pageable);
+        if (searchTerm.toLowerCase() != null) {
+
+            return tuoteRepo.haeTuotteet(searchTerm, osastonumerot, pageable);
+        } else {
+            return tuoteRepo.findByOsasto_IdIn(osastonumerot, pageable);
+        }
+
     }
 
 }

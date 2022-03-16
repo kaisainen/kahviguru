@@ -2,6 +2,11 @@ package com.example.nkk.controllers;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 import com.example.nkk.models.Osasto;
 import com.example.nkk.models.Toimittaja;
 import com.example.nkk.models.Tuote;
@@ -38,6 +43,39 @@ public class AdminController {
 
     @Autowired
     private ToimittajaService toimittajaService;
+
+    // LISÄTÄÄN TIETOKANTAAN VALMIIKSI OSASTOJA; VALMISTAJIA, TOIMITTAJIA JA
+    // TUOTTEITA KÄYNNISTYKSEN YHTEYDESSÄ
+    // @PostConstruct
+    // public void init() {
+    // osastoService.lisaaOsasto(new Osasto("Kahvilaitteet", 0L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kulutustuotteet", 0L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Espressolaitteet", 1L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kahvinkeittimet", 1L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kahvimyllyt", 1L, new ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Suodattimet", 2L, new ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kahvilaadut", 2L, new ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Espressokahvit", 7L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Suodatinkahvit", 7L, new
+    // ArrayList<>()));
+
+    // valmistajaService.uusiValmistaja(new Valmistaja("Breville",
+    // "www.breville.com", new ArrayList<>()));
+    // valmistajaService.uusiValmistaja(new Valmistaja("Black & Becker",
+    // "www.blackdecker.com", new ArrayList<>()));
+    // valmistajaService.uusiValmistaja(new Valmistaja("Bonavita",
+    // "www.bonavita.com", new ArrayList<>()));
+    // toimittajaService
+    // .lisaaToimittaja(new Toimittaja("Italian coffee", "Greg",
+    // "greg@italiancoffee.com", new ArrayList<>()));
+    // toimittajaService.lisaaToimittaja(new Toimittaja("GG", "Kalle",
+    // "kalle@gg.com", new ArrayList<>()));
+    // }
 
     // TUOTTEIDEN HALLINTA
 
