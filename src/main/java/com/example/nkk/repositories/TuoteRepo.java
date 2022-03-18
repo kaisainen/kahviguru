@@ -18,7 +18,10 @@ public interface TuoteRepo extends PagingAndSortingRepository<Tuote, Long> {
 
         @Query("SELECT t FROM Tuote t WHERE lower(t.nimi) LIKE %:searchTerm%"
                         + " AND t.osasto.id IN :osastot")
-        Page<Tuote> haeTuotteet(@Param("searchTerm") String searchTerm, @Param("osastot") List<Long> osastot,
+        Page<Tuote> haeTuotteet(@Param("searchTerm") String searchTerm, @Param("osastot") Collection<Long> osastot,
                         Pageable pageable);
+
+        @Query("SELECT t FROM Tuote t WHERE lower(t.nimi) LIKE %:searchTerm%")
+        Page<Tuote> findAll(@Param("searchTerm") String searchTerm, Pageable pageable);
 
 }

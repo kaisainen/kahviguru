@@ -3,6 +3,7 @@ package com.example.nkk.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.nkk.models.Tuote;
 import com.example.nkk.services.OsastoService;
@@ -46,35 +47,31 @@ public class TarjontaController {
 
     // KAHVILAITTEET
     @RequestMapping(path = "/kahvilaitteet")
-    public String naytaEkaSivu(Model model) {
-        String searchTerm = "";
+    public String naytaEkaSivu(Model model, String searchTerm) {
         return naytaKahvilaitteet(model, 1, searchTerm);
     }
 
     @GetMapping("/kahvilaitteet/{sivunum}")
     public String naytaKahvilaitteet(Model model, @PathVariable(name = "sivunum") Integer sivunum,
             @Param("searchTerm") String searchTerm) {
-        List<Tuote> tuotteet = new ArrayList<Tuote>();
+
         List<Long> kahvilaitteet = Arrays.asList(3L, 4L, 5L);
-        Pageable pageable = PageRequest.of(sivunum - 1, 6);
-        // String hakutermi = "";
-
-        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm, kahvilaitteet, pageable);
-        tuotteet = tuotesivut.getContent();
+        // Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm,
+        // kahvilaitteet, sivunum);
+        Page<Tuote> tuotesivut = tuoteService.listaaTuotteet(sivunum);
+        List<Tuote> tuotteet = tuotesivut.getContent();
         Integer totalSivut = tuotesivut.getTotalPages();
-        if (sivunum >= 1 && sivunum < totalSivut) {
-            model.addAttribute("seuraava", sivunum + 1);
-        }
+        Long totalTuotteet = tuotesivut.getTotalElements();
+        // if (nykyinenSivu >= 1 && nykyinenSivu < totalSivut) {
+        // model.addAttribute("seuraava", nykyinenSivu + 1);
+        // }
 
-        if (sivunum > 1 && sivunum <= totalSivut) {
-            model.addAttribute("edellinen", sivunum - 1);
-        }
-
-        if (sivunum >= 1 && sivunum <= totalSivut) {
-            model.addAttribute("nykyinen", sivunum);
-        }
+        // if (nykyinenSivu > 1 && nykyinenSivu <= totalSivut) {
+        // model.addAttribute("edellinen", nykyinenSivu - 1);
+        // }
+        model.addAttribute("nykyinenSivu", sivunum);
         model.addAttribute("totalPages", totalSivut);
-        model.addAttribute("totalItems", tuotesivut.getTotalElements());
+        model.addAttribute("totalItems", totalTuotteet);
         model.addAttribute("kahvilaitteet", tuotteet);
         return "kahvilaitteet";
     }
@@ -82,12 +79,12 @@ public class TarjontaController {
     @GetMapping(path = "/kahvilaitteet/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getKuvat(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).getKuva();
+        return tuoteService.getTuoteById(id).get().getKuva();
     }
 
     @GetMapping("/kahvilaitteet/tuotetiedot/{id}")
     public String naytaKahvilaite(@PathVariable("id") long id, Model model) {
-        Tuote tuote = tuoteService.getTuoteById(id);
+        Optional<Tuote> tuote = tuoteService.getTuoteById(id);
         model.addAttribute("tuote", tuote);
         model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
         model.addAttribute("osastot", osastoService.listaaOsastot());
@@ -108,10 +105,10 @@ public class TarjontaController {
             @Param("searchTerm") String searchTerm) {
         List<Tuote> tuotteet = new ArrayList<Tuote>();
         List<Long> kulutustuotteet = Arrays.asList(6L, 7L, 8L, 9L);
-        Pageable pageable = PageRequest.of(sivunum - 1, 12);
+        // Pageable pageable = PageRequest.of(sivunum - 1, 12);
         // String hakutermi = "";
 
-        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm, kulutustuotteet, pageable);
+        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm, kulutustuotteet, sivunum);
         tuotteet = tuotesivut.getContent();
         Integer totalSivut = tuotesivut.getTotalPages();
         if (sivunum >= 1 && sivunum < totalSivut) {
@@ -134,12 +131,12 @@ public class TarjontaController {
     @GetMapping(path = "/kulutustuotteet/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getKuvatKulutustuotteet(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).getKuva();
+        return tuoteService.getTuoteById(id).get().getKuva();
     }
 
     @GetMapping("/kulutustuotteet/tuotetiedot/{id}")
     public String naytaKulutustuote(@PathVariable("id") long id, Model model) {
-        Tuote tuote = tuoteService.getTuoteById(id);
+        Optional<Tuote> tuote = tuoteService.getTuoteById(id);
         model.addAttribute("tuote", tuote);
         model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
         model.addAttribute("osastot", osastoService.listaaOsastot());
@@ -150,7 +147,7 @@ public class TarjontaController {
     @GetMapping(path = "/tuotetiedot/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getKuvaKulutustuote(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).getKuva();
+        return tuoteService.getTuoteById(id).get().getKuva();
     }
 
 }
