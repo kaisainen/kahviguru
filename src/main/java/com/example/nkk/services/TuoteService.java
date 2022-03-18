@@ -9,6 +9,7 @@ import com.example.nkk.repositories.TuoteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +18,9 @@ public class TuoteService {
     @Autowired
     private TuoteRepo tuoteRepo;
 
-    public List<Tuote> listaaTuotteet() {
-        return tuoteRepo.findAll();
+    public Page<Tuote> listaaTuotteet() {
+        Pageable pageable = PageRequest.of(0, 6);
+        return tuoteRepo.findAll(pageable);
     }
 
     // public Page<Tuote> listaaRajatutSivut(Integer sivu, Integer sivumaara) {
@@ -42,14 +44,14 @@ public class TuoteService {
         tuoteRepo.deleteById(id);
     }
 
-    public Page<Tuote> listaaHalututTuotteet(String searchTerm, List<Long> osastonumerot,
-            Pageable pageable) {
-
+    public Page<Tuote> listaaHalututTuotteet(String searchTerm, List<Long> osastonumerot, Pageable pageable,
+            Integer aloitussivu, Integer tuotteidenmaarasivulla) {
+        Pageable pageable1 = PageRequest.of(aloitussivu, tuotteidenmaarasivulla);
         if (searchTerm.toLowerCase() != null) {
 
-            return tuoteRepo.haeTuotteet(searchTerm, osastonumerot, pageable);
+            return tuoteRepo.haeTuotteet(searchTerm, osastonumerot, pageable1);
         } else {
-            return tuoteRepo.findByOsasto_IdIn(osastonumerot, pageable);
+            return tuoteRepo.findByOsasto_IdIn(osastonumerot, pageable1);
         }
 
     }
