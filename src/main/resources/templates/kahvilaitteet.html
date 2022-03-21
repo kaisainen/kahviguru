@@ -24,7 +24,7 @@
     <section class="sivu-container">
 
       <div class="search-box">
-        <form th:action="@{/kahvilaitteet/}" class="searchForm">
+        <form th:action="@{/kahvilaitteet/1}" class="searchForm">
           <input type="text" name="searchTerm" th:value="${searchTerm}">
           <button type="submit" value="etsi" class="btn btn-primary hakunappi">Hae</button>
           <button type="submit" value="clear" onclick="tyhjennaHaku()" class="btn btn-primary hakunappi">Tyhjennä</button>
@@ -34,27 +34,26 @@
       <div class="total">Tuotteita: [[${totalItems}]] - Sivu [[${nykyinenSivu}]] / [[${totalPages}]] </div>
 
       <!-- Ekan sivun navigointi -->
-      <a th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/1'}">Ensimmäinen</a>
-<span th:unless="${nykyinenSivu > 1}">Ensimmäinen</span>
+      <!-- <a th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/1'}">Ensimmäinen</a>
+<span th:unless="${nykyinenSivu > 1}">Ensimmäinen</span> -->
 
-<!-- Edelliselle sivulle navigointi -->
-<a th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu - 1}}">Edellinen</a>
-<span th:unless="${nykyinenSivu > 1}">Edellinen</span>
+      <!-- Edelliselle sivulle navigointi -->
+      <a class="nav-larger" th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu - 1}}">&laquo;</a>
+      <span class="nav-larger" th:unless="${nykyinenSivu > 1}">&laquo;</span>
 
-<!-- N:nnen sivun navigointi -->
-<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-  <a th:if="${nykyinenSivu != i}" th:href="@{'/kahvilaitteet/' + ${i}}">Sivu [[${i}]]</a>
-  <span th:unless="${nykyinenSivu != i}"> Sivu [[${i}]]</span>
-  &nbsp;
-</span>
+      <!-- N:nnen sivun navigointi -->
+      <span th:each="i: ${#numbers.sequence(1, totalPages)}" class="nav-pagination">
+      <a th:if="${nykyinenSivu != i}" th:href="@{'/kahvilaitteet/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${nykyinenSivu != i}">[[${i}]]</span>
+      </span>
 
-<!-- Seuraavalle sivulle navigointi -->
-<a th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu + 1}}">Seuraava</a>
-<span th:unless="${nykyinenSivu < totalPages}">Seuraava</span>
+      <!-- Seuraavalle sivulle navigointi -->
+      <a class="nav-larger" th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu + 1}}">&raquo;</a>
+      <span class="nav-larger" th:unless="${nykyinenSivu < totalPages}">&raquo;</span>
 
 <!-- Viimeiselle sivulle navigointi -->
-<a th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${totalPages}}">Viimeinen</a>
-<span th:unless="${nykyinenSivu < totalPages}">Viimeinen</span>
+<!-- <a th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${totalPages}}">Viimeinen</a>
+<span th:unless="${nykyinenSivu < totalPages}">Viimeinen</span> -->
 
     <!-- </span>
       <nav aria-label="..." class="total">

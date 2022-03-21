@@ -47,8 +47,8 @@ public class TarjontaController {
 
     // KAHVILAITTEET
     @RequestMapping(path = "/kahvilaitteet")
-    public String naytaEkaSivu(Model model, String searchTerm) {
-        return naytaKahvilaitteet(model, 1, searchTerm);
+    public String naytaEkaSivu(Model model, String hakusana) {
+        return naytaKahvilaitteet(model, 1, hakusana);
     }
 
     @GetMapping("/kahvilaitteet/{sivunum}")
@@ -56,35 +56,42 @@ public class TarjontaController {
             @Param("searchTerm") String searchTerm) {
 
         List<Long> kahvilaitteet = Arrays.asList(3L, 4L, 5L);
-        // Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm,
-        // kahvilaitteet, sivunum);
-        Page<Tuote> tuotesivut = tuoteService.listaaTuotteet(sivunum);
-        List<Tuote> tuotteet = tuotesivut.getContent();
-        Integer totalSivut = tuotesivut.getTotalPages();
-        Long totalTuotteet = tuotesivut.getTotalElements();
-        // if (nykyinenSivu >= 1 && nykyinenSivu < totalSivut) {
-        // model.addAttribute("seuraava", nykyinenSivu + 1);
-        // }
 
-        // if (nykyinenSivu > 1 && nykyinenSivu <= totalSivut) {
-        // model.addAttribute("edellinen", nykyinenSivu - 1);
-        // }
-        model.addAttribute("nykyinenSivu", sivunum);
-        model.addAttribute("totalPages", totalSivut);
-        model.addAttribute("totalItems", totalTuotteet);
-        model.addAttribute("kahvilaitteet", tuotteet);
-        return "kahvilaitteet";
+        if (searchTerm != null) {
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetPageable(sivunum - 1, 2, kahvilaitteet, searchTerm);
+            List<Tuote> tuotteet = tuotesivut.getContent();
+            Integer totalSivut = tuotesivut.getTotalPages();
+            Long totalTuotteet = tuotesivut.getTotalElements();
+            model.addAttribute("nykyinenSivu", sivunum);
+            model.addAttribute("totalPages", totalSivut);
+            model.addAttribute("totalItems", totalTuotteet);
+            model.addAttribute("kahvilaitteet", tuotteet);
+            return "kahvilaitteet";
+
+        } else {
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetOsastonMukaan(sivunum - 1, 2, kahvilaitteet);
+            List<Tuote> tuotteet = tuotesivut.getContent();
+            Integer totalSivut = tuotesivut.getTotalPages();
+            Long totalTuotteet = tuotesivut.getTotalElements();
+            model.addAttribute("nykyinenSivu", sivunum);
+            model.addAttribute("totalPages", totalSivut);
+            model.addAttribute("totalItems", totalTuotteet);
+            model.addAttribute("kahvilaitteet", tuotteet);
+            return "kahvilaitteet";
+        }
     }
 
     @GetMapping(path = "/kahvilaitteet/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getKuvat(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).get().getKuva();
+        return tuoteService.getTuoteById(id).getKuva();
+        // return tuoteService.getTuoteById(id).get().getKuva();
     }
 
     @GetMapping("/kahvilaitteet/tuotetiedot/{id}")
     public String naytaKahvilaite(@PathVariable("id") long id, Model model) {
-        Optional<Tuote> tuote = tuoteService.getTuoteById(id);
+        Tuote tuote = tuoteService.getTuoteById(id);
+        // Optional<Tuote> tuote = tuoteService.getTuoteById(id);
         model.addAttribute("tuote", tuote);
         model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
         model.addAttribute("osastot", osastoService.listaaOsastot());
@@ -95,48 +102,51 @@ public class TarjontaController {
     // KULUTUSTUOTTEET
 
     @RequestMapping("/kulutustuotteet")
-    public String naytaKulutusEkaSivu(Model model) {
-        String searchTerm = "";
+    public String naytaKulutusEkaSivu(Model model, String searchTerm) {
         return naytaKulutustuotteet(model, 1, searchTerm);
     }
 
     @GetMapping("/kulutustuotteet/{sivunum}")
     public String naytaKulutustuotteet(Model model, @PathVariable(name = "sivunum") Integer sivunum,
             @Param("searchTerm") String searchTerm) {
-        List<Tuote> tuotteet = new ArrayList<Tuote>();
+
         List<Long> kulutustuotteet = Arrays.asList(6L, 7L, 8L, 9L);
-        // Pageable pageable = PageRequest.of(sivunum - 1, 12);
-        // String hakutermi = "";
 
-        Page<Tuote> tuotesivut = tuoteService.listaaHalututTuotteet(searchTerm, kulutustuotteet, sivunum);
-        tuotteet = tuotesivut.getContent();
-        Integer totalSivut = tuotesivut.getTotalPages();
-        if (sivunum >= 1 && sivunum < totalSivut) {
-            model.addAttribute("seuraava", sivunum + 1);
-        }
+        if (searchTerm != null) {
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetPageable(sivunum - 1, 2, kulutustuotteet, searchTerm);
+            List<Tuote> tuotteet = tuotesivut.getContent();
+            Integer totalSivut = tuotesivut.getTotalPages();
+            Long totalTuotteet = tuotesivut.getTotalElements();
+            model.addAttribute("nykyinenSivu", sivunum);
+            model.addAttribute("totalPages", totalSivut);
+            model.addAttribute("totalItems", totalTuotteet);
+            model.addAttribute("kulutustuotteet", tuotteet);
+            return "kulutustuotteet";
 
-        if (sivunum > 1 && sivunum <= totalSivut) {
-            model.addAttribute("edellinen", sivunum - 1);
+        } else {
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetOsastonMukaan(sivunum - 1, 2, kulutustuotteet);
+            List<Tuote> tuotteet = tuotesivut.getContent();
+            Integer totalSivut = tuotesivut.getTotalPages();
+            Long totalTuotteet = tuotesivut.getTotalElements();
+            model.addAttribute("nykyinenSivu", sivunum);
+            model.addAttribute("totalPages", totalSivut);
+            model.addAttribute("totalItems", totalTuotteet);
+            model.addAttribute("kulutustuotteet", tuotteet);
+            return "kulutustuotteet";
         }
-
-        if (sivunum >= 1 && sivunum <= totalSivut) {
-            model.addAttribute("nykyinen", sivunum);
-        }
-        model.addAttribute("totalPages", totalSivut);
-        model.addAttribute("totalItems", tuotesivut.getTotalElements());
-        model.addAttribute("kulutustuotteet", tuotteet);
-        return "kulutustuotteet";
     }
 
     @GetMapping(path = "/kulutustuotteet/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getKuvatKulutustuotteet(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).get().getKuva();
+        // return tuoteService.getTuoteById(id).get().getKuva();
+        return tuoteService.getTuoteById(id).getKuva();
     }
 
     @GetMapping("/kulutustuotteet/tuotetiedot/{id}")
     public String naytaKulutustuote(@PathVariable("id") long id, Model model) {
-        Optional<Tuote> tuote = tuoteService.getTuoteById(id);
+        Tuote tuote = tuoteService.getTuoteById(id);
+        // Optional<Tuote> tuote = tuoteService.getTuoteById(id);
         model.addAttribute("tuote", tuote);
         model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
         model.addAttribute("osastot", osastoService.listaaOsastot());
@@ -147,7 +157,8 @@ public class TarjontaController {
     @GetMapping(path = "/tuotetiedot/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getKuvaKulutustuote(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).get().getKuva();
+        return tuoteService.getTuoteById(id).getKuva();
+        // return tuoteService.getTuoteById(id).get().getKuva();
     }
 
 }

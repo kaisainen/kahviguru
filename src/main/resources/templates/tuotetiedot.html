@@ -34,8 +34,11 @@
             <span th:text="${tuote.kuvaus}">kuvaus</span>
           </p>
         </section>
-        <figure class="tuotekuva">
-          <img th:src="@{/tuotetiedot/{id}/content(id=${tuote.id})}" />
+        <figure>
+          <img
+            th:src="@{/tuotetiedot/{id}/content(id=${tuote.id})}"
+            class="tuotekuva"
+          />
         </figure>
       </section>
     </section>

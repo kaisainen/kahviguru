@@ -83,14 +83,14 @@ public class AdminController {
 
     // TUOTTEIDEN HALLINTA
 
-    // @GetMapping("/tuotteet")
-    // public String naytaTuotteet(Model model) {
-    // model.addAttribute("tuotteet", tuoteService.listaaTuotteet());
-    // model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
-    // model.addAttribute("osastot", osastoService.listaaOsastot());
-    // model.addAttribute("toimittajat", toimittajaService.listaaToimittajat());
-    // return "tuotteet";
-    // }
+    @GetMapping("/tuotteet")
+    public String naytaTuotteet(Model model) {
+        model.addAttribute("tuotteet", tuoteService.listaaTuotteet());
+        model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
+        model.addAttribute("osastot", osastoService.listaaOsastot());
+        model.addAttribute("toimittajat", toimittajaService.listaaToimittajat());
+        return "tuotteet";
+    }
 
     @PostMapping("/tuotteet")
     public String lisaaTuote(@RequestParam String nimi, @RequestParam BigDecimal hinta,
@@ -116,12 +116,14 @@ public class AdminController {
     @GetMapping(path = "/tuotteet/edittuote/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).get().getKuva();
+        return tuoteService.getTuoteById(id).getKuva();
+        // return tuoteService.getTuoteById(id).get().getKuva();
     }
 
     @GetMapping("/tuotteet/edittuote/{id}")
     public String naytaMuokkaaTuote(@PathVariable("id") long id, Model model) {
-        Optional<Tuote> tuote = tuoteService.getTuoteById(id);
+        Tuote tuote = tuoteService.getTuoteById(id);
+        // Optional<Tuote> tuote = tuoteService.getTuoteById(id);
         model.addAttribute("tuote", tuote);
         model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
         model.addAttribute("osastot", osastoService.listaaOsastot());
@@ -135,16 +137,22 @@ public class AdminController {
             @RequestParam String kuvaus, @RequestParam Long osastoID,
             @RequestParam Long toimittajaID,
             @RequestParam Long valmistajaID) {
-        Optional<Tuote> tuote = tuoteService.getTuoteById(id);
-        tuote.get().setNimi(nimi);
-        tuote.get().setHinta(hinta);
-        tuote.get().setKuvaus(kuvaus);
+        Tuote tuote = tuoteService.getTuoteById(id);
+        // tuote.get().setNimi(nimi);
+        tuote.setNimi(nimi);
+        tuote.setHinta(hinta);
+        // tuote.get().setHinta(hinta);
+        tuote.setKuvaus(kuvaus);
+        // tuote.get().setKuvaus(kuvaus);
         Osasto osasto = osastoService.getOsastoById(osastoID);
-        tuote.get().setOsasto(osasto);
+        tuote.setOsasto(osasto);
+        // tuote.get().setOsasto(osasto);
         Valmistaja valmistaja = valmistajaService.getValmistajaById(valmistajaID);
-        tuote.get().setValmistaja(valmistaja);
+        tuote.setValmistaja(valmistaja);
+        // tuote.get().setValmistaja(valmistaja);
         Toimittaja toimittaja = toimittajaService.getToimittajaById(toimittajaID);
-        tuote.get().setToimittaja(toimittaja);
+        tuote.setToimittaja(toimittaja);
+        // tuote.get().setToimittaja(toimittaja);
         tuoteService.muokkaaTuote(tuote);
         return "redirect:/tuotteet/edittuote/" + id;
     }
