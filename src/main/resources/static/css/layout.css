@@ -318,6 +318,9 @@ h5 {
 .hakunappi {
   margin-top: 1.5rem;
 }
+.page-navigation {
+  margin-bottom: 1.5rem;
+}
 .nav-pagination {
   /* border: lightgray solid 1px; */
   padding: 0.5rem 1.5rem;

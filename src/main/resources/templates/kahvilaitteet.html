@@ -33,43 +33,21 @@
 
       <div class="total">Tuotteita: [[${totalItems}]] - Sivu [[${nykyinenSivu}]] / [[${totalPages}]] </div>
 
-      <!-- Ekan sivun navigointi -->
-      <!-- <a th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/1'}">Ensimmäinen</a>
-<span th:unless="${nykyinenSivu > 1}">Ensimmäinen</span> -->
 
       <!-- Edelliselle sivulle navigointi -->
-      <a class="nav-larger" th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu - 1}}">&laquo;</a>
-      <span class="nav-larger" th:unless="${nykyinenSivu > 1}">&laquo;</span>
+      <nav class="page-navigation">
+        <a class="nav-larger" th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu - 1}}">&laquo;</a>
+        <span class="nav-larger" th:unless="${nykyinenSivu > 1}">&laquo;</span>
+        <!-- N:nnen sivun navigointi -->
+        <span th:each="i: ${#numbers.sequence(1, totalPages)}" class="nav-pagination">
+        <a th:if="${nykyinenSivu != i}" th:href="@{'/kahvilaitteet/' + ${i}}">[[${i}]]</a>
+        <span th:unless="${nykyinenSivu != i}">[[${i}]]</span>
+        </span>
+        <!-- Seuraavalle sivulle navigointi -->
+        <a class="nav-larger" th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu + 1}}">&raquo;</a>
+        <span class="nav-larger" th:unless="${nykyinenSivu < totalPages}">&raquo;</span>
+      </nav>
 
-      <!-- N:nnen sivun navigointi -->
-      <span th:each="i: ${#numbers.sequence(1, totalPages)}" class="nav-pagination">
-      <a th:if="${nykyinenSivu != i}" th:href="@{'/kahvilaitteet/' + ${i}}">[[${i}]]</a>
-      <span th:unless="${nykyinenSivu != i}">[[${i}]]</span>
-      </span>
-
-      <!-- Seuraavalle sivulle navigointi -->
-      <a class="nav-larger" th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu + 1}}">&raquo;</a>
-      <span class="nav-larger" th:unless="${nykyinenSivu < totalPages}">&raquo;</span>
-
-<!-- Viimeiselle sivulle navigointi -->
-<!-- <a th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${totalPages}}">Viimeinen</a>
-<span th:unless="${nykyinenSivu < totalPages}">Viimeinen</span> -->
-
-    <!-- </span>
-      <nav aria-label="..." class="total">
-        <ul class="pagination">
-          <li class="page-item" th:if="${edellinen != null}">
-            <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${edellinen})}"
-              >Edellinen</a
-            >
-          </li>
-          <li class="page-item" th:if="${seuraava != null}">
-            <a class="page-link" th:href="@{/kahvilaitteet/{id}(id=${seuraava})}"
-              >Seuraava</a
-            >
-          </li>
-        </ul>
-      </nav> -->
 
       <section class="flexContainer">
         <div class="card" th:each="kahvilaite : ${kahvilaitteet}">
