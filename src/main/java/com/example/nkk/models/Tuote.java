@@ -27,8 +27,8 @@ public class Tuote extends AbstractPersistable<Long> { // luo long-pääavaimet 
     // private String kuva;
     // tuote kuuluu yhteen osastoon
     @Lob
-    // @Type(type = "org.hibernate.type.BinaryType")
-    // @Basic(fetch = FetchType.EAGER)
+    @Type(type = "org.hibernate.type.BinaryType")
+    @Basic(fetch = FetchType.EAGER)
     private byte[] kuva;
     @ManyToOne
     private Osasto osasto;

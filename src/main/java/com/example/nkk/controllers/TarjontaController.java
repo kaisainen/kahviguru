@@ -58,7 +58,7 @@ public class TarjontaController {
         List<Long> kahvilaitteet = Arrays.asList(3L, 4L, 5L);
 
         if (searchTerm != null) {
-            Page<Tuote> tuotesivut = tuoteService.getTuotteetPageable(sivunum - 1, 2, kahvilaitteet, searchTerm);
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetPageable(sivunum - 1, 6, kahvilaitteet, searchTerm);
             List<Tuote> tuotteet = tuotesivut.getContent();
             Integer totalSivut = tuotesivut.getTotalPages();
             Long totalTuotteet = tuotesivut.getTotalElements();
@@ -69,7 +69,7 @@ public class TarjontaController {
             return "kahvilaitteet";
 
         } else {
-            Page<Tuote> tuotesivut = tuoteService.getTuotteetOsastonMukaan(sivunum - 1, 2, kahvilaitteet);
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetOsastonMukaan(sivunum - 1, 6, kahvilaitteet);
             List<Tuote> tuotteet = tuotesivut.getContent();
             Integer totalSivut = tuotesivut.getTotalPages();
             Long totalTuotteet = tuotesivut.getTotalElements();
@@ -113,7 +113,7 @@ public class TarjontaController {
         List<Long> kulutustuotteet = Arrays.asList(6L, 7L, 8L, 9L);
 
         if (searchTerm != null) {
-            Page<Tuote> tuotesivut = tuoteService.getTuotteetPageable(sivunum - 1, 2, kulutustuotteet, searchTerm);
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetPageable(sivunum - 1, 6, kulutustuotteet, searchTerm);
             List<Tuote> tuotteet = tuotesivut.getContent();
             Integer totalSivut = tuotesivut.getTotalPages();
             Long totalTuotteet = tuotesivut.getTotalElements();
@@ -124,7 +124,7 @@ public class TarjontaController {
             return "kulutustuotteet";
 
         } else {
-            Page<Tuote> tuotesivut = tuoteService.getTuotteetOsastonMukaan(sivunum - 1, 2, kulutustuotteet);
+            Page<Tuote> tuotesivut = tuoteService.getTuotteetOsastonMukaan(sivunum - 1, 6, kulutustuotteet);
             List<Tuote> tuotteet = tuotesivut.getContent();
             Integer totalSivut = tuotesivut.getTotalPages();
             Long totalTuotteet = tuotesivut.getTotalElements();
