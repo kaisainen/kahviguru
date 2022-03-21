@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -44,32 +45,41 @@ public class AdminController {
     @Autowired
     private ToimittajaService toimittajaService;
 
-    // LISÄTÄÄN TIETOKANTAAN VALMIIKSI OSASTOJA; VALMISTAJIA, TOIMITTAJIA JA
+    // LISÄTÄÄN TIETOKANTAAN
+    // VALMIIKSI OSASTOJA;VALMISTAJIA,
+    // TOIMITTAJIA JA
     // TUOTTEITA KÄYNNISTYKSEN YHTEYDESSÄ
-    @PostConstruct
-    public void init() {
-        osastoService.lisaaOsasto(new Osasto("Kahvilaitteet", 0L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Kulutustuotteet", 0L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Espressolaitteet", 1L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Kahvinkeittimet", 1L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Kahvimyllyt", 1L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Suodattimet", 2L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Kahvilaadut", 2L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Espressokahvit", 7L, new ArrayList<>()));
-        osastoService.lisaaOsasto(new Osasto("Suodatinkahvit", 7L, new ArrayList<>()));
 
-        valmistajaService.uusiValmistaja(new Valmistaja("Breville",
-                "www.breville.com", new ArrayList<>()));
-        valmistajaService.uusiValmistaja(new Valmistaja("Black & Becker",
-                "www.blackdecker.com", new ArrayList<>()));
-        valmistajaService.uusiValmistaja(new Valmistaja("Bonavita",
-                "www.bonavita.com", new ArrayList<>()));
-        toimittajaService
-                .lisaaToimittaja(new Toimittaja("Italian coffee", "Greg",
-                        "greg@italiancoffee.com", new ArrayList<>()));
-        toimittajaService.lisaaToimittaja(new Toimittaja("GG", "Kalle",
-                "kalle@gg.com", new ArrayList<>()));
-    }
+    // @PostConstruct
+    // public void init() {
+    // osastoService.lisaaOsasto(new Osasto("Kahvilaitteet", 0L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kulutustuotteet", 0L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Espressolaitteet", 1L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kahvinkeittimet", 1L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kahvimyllyt", 1L, new ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Suodattimet", 2L, new ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Kahvilaadut", 2L, new ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Espressokahvit", 7L, new
+    // ArrayList<>()));
+    // osastoService.lisaaOsasto(new Osasto("Suodatinkahvit", 7L, new
+    // ArrayList<>()));
+
+    // valmistajaService.uusiValmistaja(new Valmistaja("Breville",
+    // "www.breville.com", new ArrayList<>()));
+    // valmistajaService.uusiValmistaja(new Valmistaja("Black & Becker",
+    // "www.blackdecker.com", new ArrayList<>()));
+    // valmistajaService.uusiValmistaja(new Valmistaja("Bonavita",
+    // "www.bonavita.com", new ArrayList<>()));
+    // toimittajaService
+    // .lisaaToimittaja(new Toimittaja("Italian coffee", "Greg",
+    // "greg@italiancoffee.com", new ArrayList<>()));
+    // toimittajaService.lisaaToimittaja(new Toimittaja("GG", "Kalle",
+    // "kalle@gg.com", new ArrayList<>()));
+    // }
 
     // TUOTTEIDEN HALLINTA
 
@@ -107,11 +117,13 @@ public class AdminController {
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
         return tuoteService.getTuoteById(id).getKuva();
+        // return tuoteService.getTuoteById(id).get().getKuva();
     }
 
     @GetMapping("/tuotteet/edittuote/{id}")
     public String naytaMuokkaaTuote(@PathVariable("id") long id, Model model) {
         Tuote tuote = tuoteService.getTuoteById(id);
+        // Optional<Tuote> tuote = tuoteService.getTuoteById(id);
         model.addAttribute("tuote", tuote);
         model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
         model.addAttribute("osastot", osastoService.listaaOsastot());
@@ -126,15 +138,21 @@ public class AdminController {
             @RequestParam Long toimittajaID,
             @RequestParam Long valmistajaID) {
         Tuote tuote = tuoteService.getTuoteById(id);
+        // tuote.get().setNimi(nimi);
         tuote.setNimi(nimi);
         tuote.setHinta(hinta);
+        // tuote.get().setHinta(hinta);
         tuote.setKuvaus(kuvaus);
+        // tuote.get().setKuvaus(kuvaus);
         Osasto osasto = osastoService.getOsastoById(osastoID);
         tuote.setOsasto(osasto);
+        // tuote.get().setOsasto(osasto);
         Valmistaja valmistaja = valmistajaService.getValmistajaById(valmistajaID);
         tuote.setValmistaja(valmistaja);
+        // tuote.get().setValmistaja(valmistaja);
         Toimittaja toimittaja = toimittajaService.getToimittajaById(toimittajaID);
         tuote.setToimittaja(toimittaja);
+        // tuote.get().setToimittaja(toimittaja);
         tuoteService.muokkaaTuote(tuote);
         return "redirect:/tuotteet/edittuote/" + id;
     }
