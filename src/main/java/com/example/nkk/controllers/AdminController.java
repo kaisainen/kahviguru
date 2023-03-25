@@ -8,14 +8,14 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
-import com.example.nkk.models.Osasto;
-import com.example.nkk.models.Toimittaja;
-import com.example.nkk.models.Tuote;
-import com.example.nkk.models.Valmistaja;
-import com.example.nkk.services.OsastoService;
-import com.example.nkk.services.ToimittajaService;
-import com.example.nkk.services.TuoteService;
-import com.example.nkk.services.ValmistajaService;
+import com.example.nkk.models.ProductCategory;
+import com.example.nkk.models.Supplier;
+import com.example.nkk.models.Product;
+import com.example.nkk.models.Manufacturer;
+import com.example.nkk.services.ProductCategoryService;
+import com.example.nkk.services.SupplierService;
+import com.example.nkk.services.ProductService;
+import com.example.nkk.services.ManufacturerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,16 +34,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class AdminController {
 
     @Autowired
-    private OsastoService osastoService;
+    private ProductCategoryService productCategoryService;
 
     @Autowired
-    private TuoteService tuoteService;
+    private ProductService productService;
 
     @Autowired
-    private ValmistajaService valmistajaService;
+    private ManufacturerService manufacturerService;
 
     @Autowired
-    private ToimittajaService toimittajaService;
+    private SupplierService supplierService;
 
     // LISÄTÄÄN TIETOKANTAAN
     // VALMIIKSI OSASTOJA;VALMISTAJIA,
@@ -52,224 +52,216 @@ public class AdminController {
 
     // @PostConstruct
     // public void init() {
-    // osastoService.lisaaOsasto(new Osasto("Kahvilaitteet", 0L, new
+    // productCategoryService.lisaaOsasto(new Osasto("Kahvilaitteet", 0L, new
     // ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Kulutustuotteet", 0L, new
+    // productCategoryService.lisaaOsasto(new Osasto("Kulutustuotteet", 0L, new
     // ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Espressolaitteet", 1L, new
+    // productCategoryService.lisaaOsasto(new Osasto("Espressolaitteet", 1L, new
     // ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Kahvinkeittimet", 1L, new
+    // productCategoryService.lisaaOsasto(new Osasto("Kahvinkeittimet", 1L, new
     // ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Kahvimyllyt", 1L, new ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Suodattimet", 2L, new ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Kahvilaadut", 2L, new ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Espressokahvit", 7L, new
+    // productCategoryService.lisaaOsasto(new Osasto("Kahvimyllyt", 1L, new ArrayList<>()));
+    // productCategoryService.lisaaOsasto(new Osasto("Suodattimet", 2L, new ArrayList<>()));
+    // productCategoryService.lisaaOsasto(new Osasto("Kahvilaadut", 2L, new ArrayList<>()));
+    // productCategoryService.lisaaOsasto(new Osasto("Espressokahvit", 7L, new
     // ArrayList<>()));
-    // osastoService.lisaaOsasto(new Osasto("Suodatinkahvit", 7L, new
+    // productCategoryService.lisaaOsasto(new Osasto("Suodatinkahvit", 7L, new
     // ArrayList<>()));
 
-    // valmistajaService.uusiValmistaja(new Valmistaja("Breville",
+    // manufacturerService.uusiValmistaja(new Valmistaja("Breville",
     // "www.breville.com", new ArrayList<>()));
-    // valmistajaService.uusiValmistaja(new Valmistaja("Black & Becker",
+    // manufacturerService.uusiValmistaja(new Valmistaja("Black & Becker",
     // "www.blackdecker.com", new ArrayList<>()));
-    // valmistajaService.uusiValmistaja(new Valmistaja("Bonavita",
+    // manufacturerService.uusiValmistaja(new Valmistaja("Bonavita",
     // "www.bonavita.com", new ArrayList<>()));
-    // toimittajaService
+    // supplierService
     // .lisaaToimittaja(new Toimittaja("Italian coffee", "Greg",
     // "greg@italiancoffee.com", new ArrayList<>()));
-    // toimittajaService.lisaaToimittaja(new Toimittaja("GG", "Kalle",
+    // supplierService.lisaaToimittaja(new Toimittaja("GG", "Kalle",
     // "kalle@gg.com", new ArrayList<>()));
     // }
 
     // TUOTTEIDEN HALLINTA
 
-    @GetMapping("/tuotteet")
-    public String naytaTuotteet(Model model) {
-        model.addAttribute("tuotteet", tuoteService.listaaTuotteet());
-        model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
-        model.addAttribute("osastot", osastoService.listaaOsastot());
-        model.addAttribute("toimittajat", toimittajaService.listaaToimittajat());
-        return "tuotteet";
+    @GetMapping("/products")
+    public String showProducts(Model model) {
+        model.addAttribute("products", productService.listProducts());
+        model.addAttribute("manufacturers", manufacturerService.listManufacturers());
+        model.addAttribute("productcategories", productCategoryService.listProductCategories());
+        model.addAttribute("suppliers", supplierService.listSuppliers());
+        return "products";
     }
 
-    @PostMapping("/tuotteet")
-    public String lisaaTuote(@RequestParam String nimi, @RequestParam BigDecimal hinta,
-            @RequestParam String kuvaus, @RequestParam Long osastoID,
-            @RequestParam Long toimittajaID,
-            @RequestParam Long valmistajaID, @RequestParam("kuva") MultipartFile kuva)
+    @PostMapping("/products")
+    public String addProduct(@RequestParam String name, @RequestParam BigDecimal price,
+            @RequestParam String description, @RequestParam Long categoryID,
+            @RequestParam Long supplierID,
+            @RequestParam Long manufacturerID, @RequestParam("image") MultipartFile image)
             throws IOException {
-        Tuote uusiTuote = new Tuote();
-        uusiTuote.setNimi(nimi);
-        uusiTuote.setHinta(hinta);
-        uusiTuote.setKuva(kuva.getBytes());
-        uusiTuote.setKuvaus(kuvaus);
-        Osasto osasto = osastoService.getOsastoById(osastoID);
-        uusiTuote.setOsasto(osasto);
-        Valmistaja valmistaja = valmistajaService.getValmistajaById(valmistajaID);
-        uusiTuote.setValmistaja(valmistaja);
-        Toimittaja toimittaja = toimittajaService.getToimittajaById(toimittajaID);
-        uusiTuote.setToimittaja(toimittaja);
-        tuoteService.lisaaTuote(uusiTuote);
-        return "redirect:/tuotteet";
+        Product newProduct = new Product();
+        newProduct.setName(name);
+        newProduct.setPrice(price);
+        newProduct.setImage(image.getBytes());
+        newProduct.setDescription(description);
+        ProductCategory category = productCategoryService.getProductCategoryById(categoryID);
+        newProduct.setProductCategory(category);
+        Manufacturer manufacturer = manufacturerService.getmanufacturerById(manufacturerID);
+        newProduct.setManufacturer(manufacturer);
+        Supplier supplier = supplierService.getSupplierById(supplierID);
+        newProduct.setSupplier(supplier);
+        productService.addProduct(newProduct);
+        return "redirect:/products";
     }
 
-    @GetMapping(path = "/tuotteet/edittuote/{id}/content", produces = "image/jpg")
+    @GetMapping(path = "/products/editproduct/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
-        return tuoteService.getTuoteById(id).getKuva();
-        // return tuoteService.getTuoteById(id).get().getKuva();
+        return productService.getProductById(id).getImage();
     }
 
-    @GetMapping("/tuotteet/edittuote/{id}")
-    public String naytaMuokkaaTuote(@PathVariable("id") long id, Model model) {
-        Tuote tuote = tuoteService.getTuoteById(id);
-        // Optional<Tuote> tuote = tuoteService.getTuoteById(id);
-        model.addAttribute("tuote", tuote);
-        model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
-        model.addAttribute("osastot", osastoService.listaaOsastot());
-        model.addAttribute("toimittajat", toimittajaService.listaaToimittajat());
-        return "edittuote";
+    @GetMapping("/products/editproduct/{id}")
+    public String showEditProduct(@PathVariable("id") long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        model.addAttribute("manufacturers", manufacturerService.listManufacturers());
+        model.addAttribute("productcategories", productCategoryService.listProductCategories());
+        model.addAttribute("suppliers", supplierService.listSuppliers());
+        return "editproduct";
     }
 
-    @PostMapping("/tuotteet/edittuote/{id}")
-    public String muokkaaTuote(@PathVariable("id") Long id, @RequestParam String nimi,
-            @RequestParam BigDecimal hinta,
-            @RequestParam String kuvaus, @RequestParam Long osastoID,
-            @RequestParam Long toimittajaID,
-            @RequestParam Long valmistajaID) {
-        Tuote tuote = tuoteService.getTuoteById(id);
-        // tuote.get().setNimi(nimi);
-        tuote.setNimi(nimi);
-        tuote.setHinta(hinta);
-        // tuote.get().setHinta(hinta);
-        tuote.setKuvaus(kuvaus);
-        // tuote.get().setKuvaus(kuvaus);
-        Osasto osasto = osastoService.getOsastoById(osastoID);
-        tuote.setOsasto(osasto);
-        // tuote.get().setOsasto(osasto);
-        Valmistaja valmistaja = valmistajaService.getValmistajaById(valmistajaID);
-        tuote.setValmistaja(valmistaja);
-        // tuote.get().setValmistaja(valmistaja);
-        Toimittaja toimittaja = toimittajaService.getToimittajaById(toimittajaID);
-        tuote.setToimittaja(toimittaja);
-        // tuote.get().setToimittaja(toimittaja);
-        tuoteService.muokkaaTuote(tuote);
-        return "redirect:/tuotteet/edittuote/" + id;
+    @PostMapping("/products/editproduct/{id}")
+    public String editProduct(@PathVariable("id") Long id, @RequestParam String name,
+            @RequestParam BigDecimal price,
+            @RequestParam String description, @RequestParam Long categoryID,
+            @RequestParam Long supplierID,
+            @RequestParam Long manufacturerID) {
+        Product product = productService.getProductById(id);
+        product.setName(name);
+        product.setPrice(price);
+        product.setDescription(description);
+        ProductCategory productcategory = productCategoryService.getProductCategoryById(categoryID);
+        product.setProductCategory(productcategory);
+        Manufacturer manufacturer = manufacturerService.getmanufacturerById(manufacturerID);
+        product.setManufacturer(manufacturer);
+        Supplier supplier = supplierService.getSupplierById(supplierID);
+        product.setSupplier(supplier);
+        productService.editProduct(product);
+        return "redirect:/products/editproduct/" + id;
     }
 
-    @RequestMapping(value = "tuotteet/poista", method = RequestMethod.GET)
-    public String poistaTuote(@RequestParam(name = "tuoteId") Long id) {
-        tuoteService.poistaTuote(id);
-        return "redirect:/tuotteet";
+    @RequestMapping(value = "products/delete", method = RequestMethod.GET)
+    public String deleteProduct(@RequestParam(name = "productid") Long id) {
+        productService.deleteProduct(id);
+        return "redirect:/products";
     }
 
     // VALMISTAJIEN HALLINTA
 
-    @GetMapping("/valmistajat")
-    public String naytaValmistajat(Model model) {
-        model.addAttribute("valmistajat", valmistajaService.listaaValmistajat());
-        return "valmistajat";
+    @GetMapping("/manufacturers")
+    public String showmanufacturers(Model model) {
+        model.addAttribute("manufacturers", manufacturerService.listManufacturers());
+        return "manufacturers";
     }
 
-    @PostMapping("/valmistajat")
-    public String lisaaValmistaja(Model model, @ModelAttribute Valmistaja valmistaja) {
-        valmistajaService.uusiValmistaja(valmistaja);
-        return "redirect:/valmistajat";
+    @PostMapping("/manufacturers")
+    public String addManufacturer(Model model, @ModelAttribute Manufacturer manufacturer) {
+        manufacturerService.addManufacturer(manufacturer);
+        return "redirect:/manufacturers";
     }
 
-    @GetMapping("/valmistajat/muokkaa/{id}")
+    @GetMapping("/manufacturers/editmanufacturer/{id}")
     public String naytaMuokkaaValmistaja(@PathVariable("id") long id, Model model) {
-        Valmistaja valmistaja = valmistajaService.getValmistajaById(id);
-        model.addAttribute("valmistaja", valmistaja);
-        return "muokkaa";
+        Manufacturer manufacturer = manufacturerService.getmanufacturerById(id);
+        model.addAttribute("manufacturer", manufacturer);
+        return "editmanufacturer";
     }
 
-    @PostMapping("/valmistajat/muokkaa/{id}")
-    public String muokkaaValmistajaa(@PathVariable("id") Long id, @ModelAttribute Valmistaja valmistaja) {
-        Valmistaja muokkaaValmistaja = valmistajaService.getValmistajaById(id);
-        muokkaaValmistaja.setNimi(valmistaja.getNimi());
-        muokkaaValmistaja.setUrl(valmistaja.getUrl());
-        valmistajaService.muokkaaValmistajaa(muokkaaValmistaja);
-        return "redirect:/valmistajat/muokkaa/" + id;
+    @PostMapping("/manufacturers/editmanufacturer/{id}")
+    public String editManufacturer(@PathVariable("id") Long id, @ModelAttribute Manufacturer manufacturer) {
+        Manufacturer editmanufacturer = manufacturerService.getmanufacturerById(id);
+        editmanufacturer.setName(manufacturer.getName());
+        editmanufacturer.setUrl(manufacturer.getUrl());
+        manufacturerService.editManufacturera(editmanufacturer);
+        return "redirect:/manufacturers/edit/" + id;
     }
 
-    @RequestMapping(value = "valmistajat/poista", method = RequestMethod.GET)
-    public String poistaValmistaja(@RequestParam(name = "valmistajaId") Long id) {
-        valmistajaService.poistaValmistaja(id);
-        return "redirect:/valmistajat";
+    @RequestMapping(value = "manufacturers/delete", method = RequestMethod.GET)
+    public String deleteManufacturer(@RequestParam(name = "manufacturerid") Long id) {
+        manufacturerService.deleteManufacturer(id);
+        return "redirect:/manufacturers";
     }
 
     // OSASTOJEN HALLINTA
 
-    @GetMapping("/osastot")
-    public String naytaOsastot(Model model) {
-        model.addAttribute("osastot", osastoService.listaaOsastot());
-        return "osastot";
+    @GetMapping("/productcategories")
+    public String showProductCategories(Model model) {
+        model.addAttribute("productcategories", productCategoryService.listProductCategories());
+        return "productcategories";
     }
 
-    @PostMapping("/osastot")
-    public String lisaaOsasto(Model model, @ModelAttribute Osasto osasto) {
-        osastoService.lisaaOsasto(osasto);
-        return "redirect:/osastot";
+    @PostMapping("/productcategories")
+    public String lisaaOsasto(Model model, @ModelAttribute ProductCategory productcategory) {
+        productCategoryService.addProductCategory(productcategory);
+        return "redirect:/productcategories";
     }
 
-    @GetMapping("/osastot/editosasto/{id}")
-    public String naytaMuokkaaOsasto(@PathVariable("id") long id, Model model) {
-        Osasto osasto = osastoService.getOsastoById(id);
-        model.addAttribute("osasto", osasto);
-        return "editosasto";
+    @GetMapping("/productcategories/editproductcategory/{id}")
+    public String showEditProductCategory(@PathVariable("id") long id, Model model) {
+        ProductCategory productcategory = productCategoryService.getProductCategoryById(id);
+        model.addAttribute("productcategory", productcategory);
+        return "editproductcategory";
     }
 
-    @PostMapping("/osastot/editosasto/{id}")
-    public String muokkaaOsastoa(@PathVariable("id") Long id, @ModelAttribute Osasto osasto) {
-        Osasto muokkaaOsastoa = osastoService.getOsastoById(id);
-        muokkaaOsastoa.setNimi(osasto.getNimi());
-        muokkaaOsastoa.setOsastoIDP(osasto.getOsastoIDP());
-        osastoService.muokkaaOsastoa(muokkaaOsastoa);
-        return "redirect:/osastot/editosasto/" + id;
+    @PostMapping("/productcategories/editproductcategory/{id}")
+    public String editProductCategory(@PathVariable("id") Long id, @ModelAttribute ProductCategory category) {
+        ProductCategory editCategory = productCategoryService.getProductCategoryById(id);
+        editCategory.setName(category.getName());
+        editCategory.setProductCategoryIDP(category.getProductCategoryIDP());
+        productCategoryService.editProductCategory(editCategory);
+        return "redirect:/productcategories/editproductcategory/" + id;
     }
 
-    @RequestMapping(value = "osastot/poista", method = RequestMethod.GET)
-    public String poistaOsasto(@RequestParam(name = "osastoId") Long id) {
-        osastoService.poistaOsasto(id);
-        return "redirect:/osastot";
+    @RequestMapping(value = "productcategories/delete", method = RequestMethod.GET)
+    public String deleteProductCategory(@RequestParam(name = "categoryid") Long id) {
+        productCategoryService.deleteProductCategory(id);
+        return "redirect:/productcategories";
     }
 
     // HALLINNOI TOIMITTAJIA
 
-    @GetMapping("/toimittajat")
-    public String naytaToimittajat(Model model) {
-        model.addAttribute("toimittajat", toimittajaService.listaaToimittajat());
-        return "toimittajat";
+    @GetMapping("/suppliers")
+    public String showSuppliers(Model model) {
+        model.addAttribute("suppliers", supplierService.listSuppliers());
+        return "suppliers";
     }
 
-    @PostMapping("/toimittajat")
-    public String lisaaToimittaja(Model model, @ModelAttribute Toimittaja toimittaja) {
-        toimittajaService.lisaaToimittaja(toimittaja);
-        return "redirect:/toimittajat";
+    @PostMapping("/suppliers")
+    public String addSupplier(Model model, @ModelAttribute Supplier supplier) {
+        supplierService.addSupplier(supplier);
+        return "redirect:/suppliers";
     }
 
-    @GetMapping("/toimittajat/edit/{id}")
-    public String naytaMuokkaaToimittaja(@PathVariable("id") long id, Model model) {
-        Toimittaja toimittaja = toimittajaService.getToimittajaById(id);
-        model.addAttribute("toimittaja", toimittaja);
+    @GetMapping("/suppliers/edit/{id}")
+    public String showEditSupplier(@PathVariable("id") long id, Model model) {
+        Supplier supplier = supplierService.getSupplierById(id);
+        model.addAttribute("supplier", supplier);
         return "edit";
     }
 
-    @PostMapping("/toimittajat/edit/{id}")
-    public String muokkaaToimittajaa(@PathVariable("id") Long id, @ModelAttribute Toimittaja toimittaja) {
-        Toimittaja muokkaaToimittaja = toimittajaService.getToimittajaById(id);
-        muokkaaToimittaja.setNimi(toimittaja.getNimi());
-        muokkaaToimittaja.setYhteyshenkilo(toimittaja.getYhteyshenkilo());
-        muokkaaToimittaja.setYhteyshenkiloemail(toimittaja.getYhteyshenkiloemail());
-        toimittajaService.muokkaaToimittaja(muokkaaToimittaja);
-        return "redirect:/toimittajat/edit/" + id;
+    @PostMapping("/suppliers/edit/{id}")
+    public String editSupplier(@PathVariable("id") Long id, @ModelAttribute Supplier supplier) {
+        Supplier editSupplier = supplierService.getSupplierById(id);
+        editSupplier.setName(supplier.getName());
+        editSupplier.setContactPersonName(supplier.getContactPersonName());
+        editSupplier.setContactEmail(supplier.getContactEmail());
+        supplierService.editSupplier(editSupplier);
+        return "redirect:/suppliers/edit/" + id;
     }
 
-    @RequestMapping(value = "toimittajat/poista", method = RequestMethod.GET)
-    public String poistaToimittaja(@RequestParam(name = "toimittajaId") Long id) {
-        toimittajaService.poistaToimittaja(id);
-        return "redirect:/toimittajat";
+    @RequestMapping(value = "suppliers/delete", method = RequestMethod.GET)
+    public String deleteSupplier(@RequestParam(name = "supplierid") Long id) {
+        supplierService.deleteSupplier(id);
+        return "redirect:/suppliers";
     }
 
 }

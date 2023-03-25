@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -15,12 +14,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Valmistaja extends AbstractPersistable<Long> {
+public class ProductCategory extends AbstractPersistable<Long> {
 
-    private String nimi;
-    private String url;
+    private String name;
+    private Long productCategoryIDP;
 
-    // valmistajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
-    @OneToMany(mappedBy = "valmistaja")
-    private List<Tuote> tuotteet = new ArrayList<>();
+    // osastossa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN, ei osasto
+    @OneToMany(mappedBy = "productCategory")
+    private List<Product> products = new ArrayList<>();
 }

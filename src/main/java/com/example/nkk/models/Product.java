@@ -19,24 +19,24 @@ import lombok.NoArgsConstructor;
 @Data // luo getterit ja setterit
 @NoArgsConstructor // luo konstruktorit
 @AllArgsConstructor // luo konstruktorit
-public class Tuote extends AbstractPersistable<Long> { // luo long-pääavaimet automaattisesti luokkaan
+public class Product extends AbstractPersistable<Long> { // luo long-pääavaimet automaattisesti luokkaan
 
-    private String nimi;
-    private String kuvaus;
-    private BigDecimal hinta;
+    private String name;
+    private String description;
+    private BigDecimal price;
     // private String kuva;
     // tuote kuuluu yhteen osastoon
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
     @Basic(fetch = FetchType.EAGER)
-    private byte[] kuva;
+    private byte[] image;
     @ManyToOne
-    private Osasto osasto;
+    private ProductCategory productCategory;
     // tuote kuuluu yhteen valmistajaan
     @ManyToOne
-    private Valmistaja valmistaja;
+    private Manufacturer manufacturer;
     // tuote kuuluu yhteen toimittajaan
     @ManyToOne
-    private Toimittaja toimittaja;
+    private Supplier supplier;
 
 }

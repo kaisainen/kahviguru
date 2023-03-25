@@ -1,6 +1,6 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap"); */
 
-@import url("https://fonts.googleapis.com/css2?family=Amita&family=Bitter&family=Fredoka+One&family=Lobster&family=Milonga&family=Montserrat+Alternates&family=Outfit&family=Poppins&family=Rammetto+One&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;400&display=swap');
 :root {
   --bs-primary: #4b4a4a;
 }
@@ -12,11 +12,11 @@ body {
   font-size: 1.8rem;
   background-color: white;
   margin: auto;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Roboto Slab', serif;
 }
 
 .kahviguru {
-  font-family: "Rammetto One", cursive;
+  font-family: 'Roboto Slab', serif;
   font-size: 9rem;
   /* padding: 1rem 0 1rem 1rem; */
   color: #c01719;

@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Toimittaja extends AbstractPersistable<Long> {
+public class Supplier extends AbstractPersistable<Long> {
 
-    private String nimi;
-    private String yhteyshenkilo;
-    private String yhteyshenkiloemail;
+    private String name;
+    private String contactPersonName;
+    private String contactEmail;
 
     // toimittajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
-    @OneToMany(mappedBy = "toimittaja")
-    private List<Tuote> tuotteet = new ArrayList<>();
+    @OneToMany(mappedBy = "supplier")
+    private List<Product> products = new ArrayList<>();
 }

@@ -24,47 +24,47 @@
     <section class="sivu-container">
 
       <div class="search-box">
-        <form th:action="@{/kahvilaitteet/1}" class="searchForm">
+        <form th:action="@{/coffeemakers/1}" class="searchForm">
           <input type="text" name="searchTerm" th:value="${searchTerm}">
           <button type="submit" value="etsi" class="btn btn-primary hakunappi">Hae</button>
           <button type="submit" value="clear" onclick="tyhjennaHaku()" class="btn btn-primary hakunappi">Tyhjennä</button>
         </form>
       </div>
 
-      <div class="total">Tuotteita: [[${totalItems}]] - Sivu [[${nykyinenSivu}]] / [[${totalPages}]] </div>
+      <div class="total">Products: [[${totalItems}]] - Page [[${currentPage}]] / [[${totalPages}]] </div>
 
 
       <!-- Edelliselle sivulle navigointi -->
       <nav class="page-navigation">
-        <a class="nav-larger" th:if="${nykyinenSivu > 1}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu - 1}}">&laquo;</a>
-        <span class="nav-larger" th:unless="${nykyinenSivu > 1}">&laquo;</span>
+        <a class="nav-larger" th:if="${currentPage > 1}" th:href="@{'/coffeemakers/' + ${currentPage - 1}}">&laquo;</a>
+        <span class="nav-larger" th:unless="${currentPage > 1}">&laquo;</span>
         <!-- N:nnen sivun navigointi -->
         <span th:each="i: ${#numbers.sequence(1, totalPages)}" class="nav-pagination">
-        <a th:if="${nykyinenSivu != i}" th:href="@{'/kahvilaitteet/' + ${i}}">[[${i}]]</a>
-        <span th:unless="${nykyinenSivu != i}">[[${i}]]</span>
+        <a th:if="${currentPage != i}" th:href="@{'/coffeemakers/' + ${i}}">[[${i}]]</a>
+        <span th:unless="${currentPage != i}">[[${i}]]</span>
         </span>
         <!-- Seuraavalle sivulle navigointi -->
-        <a class="nav-larger" th:if="${nykyinenSivu < totalPages}" th:href="@{'/kahvilaitteet/' + ${nykyinenSivu + 1}}">&raquo;</a>
-        <span class="nav-larger" th:unless="${nykyinenSivu < totalPages}">&raquo;</span>
+        <a class="nav-larger" th:if="${currentPage < totalPages}" th:href="@{'/coffeemakers/' + ${currentPage + 1}}">&raquo;</a>
+        <span class="nav-larger" th:unless="${currentPage < totalPages}">&raquo;</span>
       </nav>
 
 
       <section class="flexContainer">
-        <div class="card" th:each="kahvilaite : ${kahvilaitteet}">
+        <div class="card" th:each="coffeemaker : ${coffeemakers}">
           <img
-            th:src="@{/kahvilaitteet/{id}/content(id=${kahvilaite.id})}"
+            th:src="@{/coffeemakers/{id}/content(id=${coffeemaker.id})}"
             class="card-img-top"
-            alt="kahvinkeitin"
+            alt="coffeemaker"
           />
           <div class="card-body">
-            <h5 class="card-title" th:text="${kahvilaite.nimi}"></h5>
+            <h5 class="card-title" th:text="${coffeemaker.name}"></h5>
             <p></p>
-              <span class="card-text" th:text="${kahvilaite.hinta}"></span> €
+              <span class="card-text" th:text="${coffeemaker.price}"></span> €
             </p>
             <a
-              th:href="@{kahvilaitteet/tuotetiedot/{id}(id=${kahvilaite.id})}"
+              th:href="@{coffeemakers/productdetails/{id}(id=${coffeemaker.id})}"
               class="btn btn-primary"
-              >Näytä lisää</a
+              >Show more</a
             >
           </div>
         </div>
