@@ -45,7 +45,7 @@ public class ProductsController {
         return "index";
     }
 
-    /* The method displays the first page of search results for a list of coffee makers. */
+    /* The method displays the first page of search results for a list of coffeemakers. */
     @RequestMapping(path = "/coffeemakers")
     public String showFirstPage(Model model, String searchTerm) {
         return showCoffeeMakers(model, 1, searchTerm);
