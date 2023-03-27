@@ -19,7 +19,7 @@ public class ProductCategory extends AbstractPersistable<Long> {
     private String name;
     private Long productCategoryIDP;
 
-    // osastossa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN, ei osasto
+    // a product category can have many products. PRODUCT table owns the relationship.
     @OneToMany(mappedBy = "productCategory")
     private List<Product> products = new ArrayList<>();
 }

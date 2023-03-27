@@ -22,7 +22,7 @@ public class Supplier extends AbstractPersistable<Long> {
     private String contactPersonName;
     private String contactEmail;
 
-    // toimittajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
+    // many products in one supplier. PRODUCT owns the relationship.
     @OneToMany(mappedBy = "supplier")
     private List<Product> products = new ArrayList<>();
 }

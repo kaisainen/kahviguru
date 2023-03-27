@@ -20,7 +20,7 @@ public class Manufacturer extends AbstractPersistable<Long> {
     private String name;
     private String url;
 
-    // valmistajassa voi olla monta tuotetta. TUOTTEET OMISTAA SUHTEEN
+    // many products in one manufacturer. PRODUCT owns the relationship.
     @OneToMany(mappedBy = "manufacturer")
     private List<Product> products = new ArrayList<>();
 }
