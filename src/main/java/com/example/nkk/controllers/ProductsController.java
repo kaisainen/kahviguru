@@ -45,20 +45,23 @@ public class ProductsController {
         return "index";
     }
 
-    // KAHVILAITTEET
+    /* The method displays the first page of search results for a list of coffee makers. */
     @RequestMapping(path = "/coffeemakers")
     public String showFirstPage(Model model, String searchTerm) {
         return showCoffeeMakers(model, 1, searchTerm);
     }
 
+    /* This method fetches a list of coffee makers and returns a page of coffee maker(s) (possibly based on a searchterm), 
+    along with information about the current page and the total number of pages and products. */
     @GetMapping("/coffeemakers/{pagenum}")
     public String showCoffeeMakers(Model model, @PathVariable(name = "pagenum") Integer pagenum,
             @Param("searchTerm") String searchTerm) {
 
+        // caoffee maker category IDs        
         List<Long> coffeeMakers = Arrays.asList(3L, 4L, 5L);
 
         if (searchTerm != null) {
-            Page<Product> productPage = productService.getProductsPageable(pagenum - 1, 6, coffeeMakers, searchTerm);
+            Page<Product> productPage = productService.getProductsPageable(pagenum - 1, 6, coffeeMakers, searchTerm); // we want to how 6 products in a view
             List<Product> products = productPage.getContent();
             Integer totalPages = productPage.getTotalPages();
             Long totalProducts = productPage.getTotalElements();
@@ -81,12 +84,14 @@ public class ProductsController {
         }
     }
 
+    /* This method returns products' images based on the products' ID. */
     @GetMapping(path = "/coffeemakers/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getImages(@PathVariable Long id) {
         return productService.getProductById(id).getImage();
     }
 
+    /* This method returns the details of a product in a separate /productdetails view */
     @GetMapping("/coffeemakers/productdetails/{id}")
     public String showCoffeeMaker(@PathVariable("id") long id, Model model) {
         Product product = productService.getProductById(id);
@@ -97,17 +102,21 @@ public class ProductsController {
         return "productdetails";
     }
 
-    // supplies
+    // Supplies
 
+    /* The method displays the first page of search results for a list of supplies. */
     @RequestMapping(path="/supplies")
     public String showSuppliesFirstPage(Model model, String searchTerm) {
         return showSuppliesFirstPage(model, searchTerm);
     }
 
+    /* This method fetches a list of supplies and returns a page of supplies (possibly based on a searchterm), 
+    along with information about the current page and the total number of pages and products. */
     @GetMapping("/supplies/{pagenum}")
     public String showSupplies(Model model, @PathVariable(name = "pagenum") Integer pagenum,
             @Param("searchTerm") String searchTerm) {
-
+        
+        // Supplies related product category IDs
         List<Long> supplies = Arrays.asList(6L, 7L, 8L, 9L);
 
         if (searchTerm != null) {
@@ -134,12 +143,14 @@ public class ProductsController {
         }
     }
 
+    /* This method returns products' images based on the products' ID. */
     @GetMapping(path = "/supplies/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getContentImage(@PathVariable Long id) {
         return productService.getProductById(id).getImage();
     }
 
+    /* This method returns the details of a product in a separate /productdetails view */
     @GetMapping("/supplies/productdetails/{id}")
     public String showSupplies(@PathVariable("id") long id, Model model) {
         Product product = productService.getProductById(id);
@@ -150,6 +161,7 @@ public class ProductsController {
         return "productdetails";
     }
 
+    /* This method returns products' images based on the products' ID. */
     @GetMapping(path = "/productdetails/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] getSuppliesImage(@PathVariable Long id) {
