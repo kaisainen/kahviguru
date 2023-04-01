@@ -83,6 +83,7 @@ public class AdminController {
 
     // TUOTTEIDEN HALLINTA
 
+    /* This method return the view for all products. */
     @GetMapping("/products")
     public String showProducts(Model model) {
         model.addAttribute("products", productService.listProducts());
@@ -92,6 +93,7 @@ public class AdminController {
         return "products";
     }
 
+    /* This method enables adding a product to the database. */
     @PostMapping("/products")
     public String addProduct(@RequestParam String name, @RequestParam BigDecimal price,
             @RequestParam String description, @RequestParam Long categoryID,
@@ -113,12 +115,14 @@ public class AdminController {
         return "redirect:/products";
     }
 
+    /* This method returns the image of a single product in its edit view. */
     @GetMapping(path = "/products/editproduct/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
         return productService.getProductById(id).getImage();
     }
 
+    /* This method returns the edit view of a single product. */
     @GetMapping("/products/editproduct/{id}")
     public String showEditProduct(@PathVariable("id") long id, Model model) {
         Product product = productService.getProductById(id);
@@ -129,6 +133,7 @@ public class AdminController {
         return "editproduct";
     }
 
+    /* This method enables making changes to a product in the database. */
     @PostMapping("/products/editproduct/{id}")
     public String editProduct(@PathVariable("id") Long id, @RequestParam String name,
             @RequestParam BigDecimal price,
@@ -149,6 +154,7 @@ public class AdminController {
         return "redirect:/products/editproduct/" + id;
     }
 
+    /* This method deletes a product from the database. */
     @RequestMapping(value = "products/delete", method = RequestMethod.GET)
     public String deleteProduct(@RequestParam(name = "productid") Long id) {
         productService.deleteProduct(id);
@@ -157,25 +163,29 @@ public class AdminController {
 
     // VALMISTAJIEN HALLINTA
 
+    /* This method returns all manufacturers in the database. */
     @GetMapping("/manufacturers")
     public String showmanufacturers(Model model) {
         model.addAttribute("manufacturers", manufacturerService.listManufacturers());
         return "manufacturers";
     }
 
+    /* This method adds a new manufacturer to the database. */
     @PostMapping("/manufacturers")
     public String addManufacturer(Model model, @ModelAttribute Manufacturer manufacturer) {
         manufacturerService.addManufacturer(manufacturer);
         return "redirect:/manufacturers";
     }
 
+    /* This method return the edit view of a manufacturer. */
     @GetMapping("/manufacturers/editmanufacturer/{id}")
-    public String naytaMuokkaaValmistaja(@PathVariable("id") long id, Model model) {
+    public String showEditManufacturer(@PathVariable("id") long id, Model model) {
         Manufacturer manufacturer = manufacturerService.getmanufacturerById(id);
         model.addAttribute("manufacturer", manufacturer);
         return "editmanufacturer";
     }
 
+    /* This method makes changes to the manufacturer in the database. */
     @PostMapping("/manufacturers/editmanufacturer/{id}")
     public String editManufacturer(@PathVariable("id") Long id, @ModelAttribute Manufacturer manufacturer) {
         Manufacturer editmanufacturer = manufacturerService.getmanufacturerById(id);
@@ -185,6 +195,7 @@ public class AdminController {
         return "redirect:/manufacturers/edit/" + id;
     }
 
+    /* This method deletes a manufacturer from the database. */
     @RequestMapping(value = "manufacturers/delete", method = RequestMethod.GET)
     public String deleteManufacturer(@RequestParam(name = "manufacturerid") Long id) {
         manufacturerService.deleteManufacturer(id);
@@ -193,18 +204,21 @@ public class AdminController {
 
     // OSASTOJEN HALLINTA
 
+    /* This method returns all product categories in the database. */
     @GetMapping("/productcategories")
     public String showProductCategories(Model model) {
         model.addAttribute("productcategories", productCategoryService.listProductCategories());
         return "productcategories";
     }
 
+    /* This method adds a new product category to the database. */
     @PostMapping("/productcategories")
     public String lisaaOsasto(Model model, @ModelAttribute ProductCategory productcategory) {
         productCategoryService.addProductCategory(productcategory);
         return "redirect:/productcategories";
     }
 
+    /* This method return the edit view of a product category. */
     @GetMapping("/productcategories/editproductcategory/{id}")
     public String showEditProductCategory(@PathVariable("id") long id, Model model) {
         ProductCategory productcategory = productCategoryService.getProductCategoryById(id);
@@ -212,6 +226,7 @@ public class AdminController {
         return "editproductcategory";
     }
 
+    /* This method makes changes to the product category in the database. */
     @PostMapping("/productcategories/editproductcategory/{id}")
     public String editProductCategory(@PathVariable("id") Long id, @ModelAttribute ProductCategory category) {
         ProductCategory editCategory = productCategoryService.getProductCategoryById(id);
@@ -221,6 +236,7 @@ public class AdminController {
         return "redirect:/productcategories/editproductcategory/" + id;
     }
 
+    /* This method deletes a product category from the database. */
     @RequestMapping(value = "productcategories/delete", method = RequestMethod.GET)
     public String deleteProductCategory(@RequestParam(name = "categoryid") Long id) {
         productCategoryService.deleteProductCategory(id);
@@ -229,18 +245,21 @@ public class AdminController {
 
     // HALLINNOI TOIMITTAJIA
 
+    /* This method returns all suppliers in the database. */
     @GetMapping("/suppliers")
     public String showSuppliers(Model model) {
         model.addAttribute("suppliers", supplierService.listSuppliers());
         return "suppliers";
     }
 
+    /* This method adds a new supplier to the database. */
     @PostMapping("/suppliers")
     public String addSupplier(Model model, @ModelAttribute Supplier supplier) {
         supplierService.addSupplier(supplier);
         return "redirect:/suppliers";
     }
-
+    
+    /* This method return the edit view of a psupplier. */
     @GetMapping("/suppliers/edit/{id}")
     public String showEditSupplier(@PathVariable("id") long id, Model model) {
         Supplier supplier = supplierService.getSupplierById(id);
@@ -248,6 +267,7 @@ public class AdminController {
         return "edit";
     }
 
+    /* This method makes changes to the supplier in the database. */
     @PostMapping("/suppliers/edit/{id}")
     public String editSupplier(@PathVariable("id") Long id, @ModelAttribute Supplier supplier) {
         Supplier editSupplier = supplierService.getSupplierById(id);
@@ -258,6 +278,7 @@ public class AdminController {
         return "redirect:/suppliers/edit/" + id;
     }
 
+    /* This method deletes a supplier from the database. */
     @RequestMapping(value = "suppliers/delete", method = RequestMethod.GET)
     public String deleteSupplier(@RequestParam(name = "supplierid") Long id) {
         supplierService.deleteSupplier(id);

@@ -21,8 +21,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         public Page<Product> getProducts(@Param("searchTerm") String searchTerm, @Param("productCategories") List<Long> productCategories,
                         Pageable pageable);
 
-        // @Query("SELECT t FROM Product t WHERE lower(t.nimi) LIKE %:searchTerm%")
-        // Page<Product> findAll(@Param("searchTerm") String searchTerm, Pageable
-        // pageable);
-
 }

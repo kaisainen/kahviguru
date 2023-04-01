@@ -15,27 +15,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity // luo tietokantataulun
-@Data // luo getterit ja setterit
-@NoArgsConstructor // luo konstruktorit
-@AllArgsConstructor // luo konstruktorit
-public class Product extends AbstractPersistable<Long> { // luo long-pääavaimet automaattisesti luokkaan
+@Entity // creates a table
+@Data // creates getters and setters
+@NoArgsConstructor // creates constructors
+@AllArgsConstructor // creates constructors
+public class Product extends AbstractPersistable<Long> { // creates long ids automatically
 
     private String name;
     private String description;
     private BigDecimal price;
-    // private String kuva;
-    // tuote kuuluu yhteen osastoon
+    // product belongs to only one product category
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
     @Basic(fetch = FetchType.EAGER)
     private byte[] image;
     @ManyToOne
     private ProductCategory productCategory;
-    // tuote kuuluu yhteen valmistajaan
+    // product belongs to one manufacturer
     @ManyToOne
     private Manufacturer manufacturer;
-    // tuote kuuluu yhteen toimittajaan
+    // product belongs to one supplier
     @ManyToOne
     private Supplier supplier;
 
